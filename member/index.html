@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>白鹿会员端 H5 原型</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap">
 <style>
 /* 白鹿俱乐部 设计规范 · 语义色（来自规范库 tokens.json）。light = 象牙（默认），dark = 夜紫。 */
 :root{
@@ -26,7 +26,9 @@
   --shadow-2:0 8px 24px rgba(35,13,48,0.10); --shadow-3:0 16px 48px rgba(35,13,48,0.18);
   --serif:"Noto Serif SC","Songti SC",serif;
   --sans:"Noto Sans SC","PingFang SC",system-ui,sans-serif;
-  --display:"Cormorant Garamond","Noto Serif SC",Georgia,serif;
+  --display:"Bodoni Moda","Noto Serif SC",Georgia,serif; --display-zh:"ZCOOL XiaoWei","Noto Serif SC","Songti SC",serif;
+  --tier-gold:#E8D9B8; --tier-diamond:#13061A; --tier-chairman:#0B0410; --tier-ink-on-gold:#230D30; --tier-gold-text:#6B5128;
+  --plum-100:#EADCEC; --av-ink:#3D1A40; --mark-filter:brightness(.18);
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --surface:#13061A; --surface-raised:#230D30; --surface-sunken:#0C0412; --surface-inverse:#2A1236; --surface-inverse-2:#0C0412;
@@ -38,7 +40,7 @@
   --success:#8FC2A4; --success-bg:#1B2A22; --warning:#E3B877; --warning-bg:#33240F;
   --danger:#E8A8A8; --danger-bg:#3A1A1C; --info:#9DB9DE; --info-bg:#16233A;
   --neutral-tag-bg:#3A2442; --neutral-tag:#E8D9B8;
-  --plum-50:#2E1838; --plum-600:#B391B9; --neutral-400:#6B5A70; --avatar-bg:#3A2A18; --avatar-ink:#E8D9B8;
+  --plum-50:#2E1838; --plum-600:#B391B9; --plum-100:#3A2442; --av-ink:#E8D9B8; --mark-filter:none; --neutral-400:#6B5A70; --avatar-bg:#3A2A18; --avatar-ink:#E8D9B8;
   --inverse-track:#3A2442; --inverse-line:#4A2A52; --inverse-tile:#3A1F46;
   --data-1:#B391B9; --data-2:#C9A86F; --data-3:#9DB9DE; --data-4:#D3BAD7; --data-5:#E3B877;
   --shadow-2:0 8px 24px rgba(0,0,0,0.50); --shadow-3:0 16px 48px rgba(0,0,0,0.60);
@@ -54,7 +56,7 @@
   --success:#8FC2A4; --success-bg:#1B2A22; --warning:#E3B877; --warning-bg:#33240F;
   --danger:#E8A8A8; --danger-bg:#3A1A1C; --info:#9DB9DE; --info-bg:#16233A;
   --neutral-tag-bg:#3A2442; --neutral-tag:#E8D9B8;
-  --plum-50:#2E1838; --plum-600:#B391B9; --neutral-400:#6B5A70; --avatar-bg:#3A2A18; --avatar-ink:#E8D9B8;
+  --plum-50:#2E1838; --plum-600:#B391B9; --plum-100:#3A2442; --av-ink:#E8D9B8; --mark-filter:none; --neutral-400:#6B5A70; --avatar-bg:#3A2A18; --avatar-ink:#E8D9B8;
   --inverse-track:#3A2442; --inverse-line:#4A2A52; --inverse-tile:#3A1F46;
   --data-1:#B391B9; --data-2:#C9A86F; --data-3:#9DB9DE; --data-4:#D3BAD7; --data-5:#E3B877;
   --shadow-2:0 8px 24px rgba(0,0,0,0.50); --shadow-3:0 16px 48px rgba(0,0,0,0.60);
@@ -73,8 +75,8 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .stage{min-height:100%;display:flex;align-items:center;justify-content:center;gap:64px;padding-block:40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:border-box}
 .notes{width:300px;color:var(--stage-ink);display:flex;flex-direction:column;gap:20px}
 .notes img{height:44px;align-self:flex-start}
-.notes .eyebrow{font-family:var(--display);font-style:italic;font-size:22px;color:#C9A86F}
-.notes h1{margin:0;font-family:var(--serif);font-size:26px;line-height:1.35;color:#F5EEE2;text-wrap:balance}
+.notes .eyebrow{font-family:var(--display);font-size:12px;letter-spacing:.3em;color:#C9A86F}
+.notes h1{margin:8px 0 0;font-family:var(--display-zh);font-weight:400;letter-spacing:.04em;font-size:30px;line-height:1.35;color:#F5EEE2;text-wrap:balance}
 .notes p{margin:0;font-size:13.5px;line-height:1.75;color:var(--stage-muted)}
 .jump{display:flex;flex-direction:column;gap:2px}
 .jump .grp{font-size:12px;letter-spacing:.12em;color:var(--stage-muted);margin:10px 0 4px}
@@ -114,11 +116,11 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .pill{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap;background:var(--tag-bg);color:var(--tag-text)}
 .pill.ok{background:var(--success-bg);color:var(--success)} .pill.warn{background:var(--warning-bg);color:var(--warning)} .pill.bad{background:var(--danger-bg);color:var(--danger)} .pill.done{background:var(--neutral-tag-bg);color:var(--neutral-tag)}
 .topbar{display:flex;align-items:center;gap:6px;padding:14px 12px 10px;background:var(--surface);position:sticky;top:0;z-index:5}
-.topbar h1{margin:0;font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
+.topbar h1{margin:0;font-family:var(--display-zh);font-size:24px;font-weight:400;letter-spacing:.04em;color:var(--ink)}
 .iconbtn{width:44px;height:44px;border:0;background:transparent;border-radius:22px;display:flex;align-items:center;justify-content:center;flex:none;color:var(--ink)}
 .iconbtn.glass{background:var(--scrim);color:#FFFFFF;width:40px;height:40px;border-radius:20px}
-.h2row{display:flex;justify-content:space-between;align-items:baseline;padding:18px 20px 0}
-.h2row h2{margin:0;font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
+.h2row{display:flex;justify-content:space-between;align-items:baseline;padding:22px 20px 0}
+.h2row h2{margin:0;font-family:var(--display-zh);font-size:20px;font-weight:400;letter-spacing:.04em;color:var(--ink)}
 .link{all:unset;cursor:pointer;font-size:13px;color:var(--accent-text)}
 .card{background:var(--surface-raised);border:1px solid var(--border);border-radius:14px;color:var(--ink)}
 .muted{color:var(--ink-muted)}
@@ -136,7 +138,6 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .band{background:var(--surface-inverse);color:var(--ink-inverse)}
 .band .sub{font-size:13px;color:var(--ink-inverse-muted)}
 .tiercard{border-radius:18px;background:var(--tier-platinum);border:1px solid var(--tier-foil);color:var(--tier-ink)}
-.tiercard .script{font-family:var(--display);font-style:italic;color:var(--tier-foil)}
 .tiercard small{font-size:12px;color:#BFA9C4}
 .track{height:4px;border-radius:2px;background:var(--inverse-track)}
 .track i{display:block;height:4px;border-radius:2px;background:var(--accent)}
@@ -209,7 +210,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 /* done */
 .done{min-height:100%;display:flex;flex-direction:column;align-items:center;padding:70px 24px 30px;text-align:center;gap:14px;box-sizing:border-box}
 .done .seal{width:84px;height:84px;border-radius:42px;background:var(--surface-inverse);color:var(--accent);display:flex;align-items:center;justify-content:center}
-.done h1{margin:6px 0 0;font-family:var(--serif);font-size:24px;color:var(--ink)}
+.done h1{margin:6px 0 0;font-family:var(--display-zh);font-weight:400;letter-spacing:.04em;font-size:30px;color:var(--ink)}
 
 /* trips */
 .seg{display:grid;grid-template-columns:1fr 1fr;margin:4px 16px 0;background:var(--surface-sunken);border-radius:999px;padding:4px}
@@ -249,9 +250,80 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 /* overlays */
 .scrim{position:absolute;inset:0;background:var(--scrim);display:flex;align-items:flex-end;z-index:20}
 .panel{width:100%;background:var(--surface);border-radius:22px 22px 0 0;padding:26px 24px max(30px,env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;box-shadow:var(--shadow-3)}
-.panel h2{margin:0;font-family:var(--serif);font-size:20px;color:var(--ink)}
+.panel h2{margin:0;font-family:var(--display-zh);font-weight:400;letter-spacing:.04em;font-size:22px;color:var(--ink)}
 .toast{position:absolute;left:50%;bottom:110px;transform:translateX(-50%);background:var(--ink);color:var(--surface);font-size:13px;padding:10px 16px;border-radius:999px;z-index:30;max-width:80%;text-align:center;box-shadow:var(--shadow-2)}
 @media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+/* ---------- v3 ---------- */
+.photo{position:relative;display:block;overflow:hidden;background:var(--tier-platinum)}
+.photo>img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.72) contrast(1.05) brightness(.86)}
+.photo::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(19,6,26,.35) 100%),rgba(35,13,48,.18)}
+.cthumb{width:84px;height:84px;border-radius:10px;flex:none}
+.trip .photo.thumb,.trip .ph.thumb{width:72px;height:72px;border-radius:10px;flex:none}
+.ov{font-family:var(--display);font-size:11px;line-height:16px;letter-spacing:.3em;color:#C9A86F}
+.ov.lt{color:var(--accent-text)}
+.hero3{position:relative;height:468px;overflow:hidden;background:#13061A;color:#F5EEE2;touch-action:pan-y}
+.hero3 .bg{position:absolute;inset:0}
+.hero3 .bg>img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.72) contrast(1.05) brightness(.86)}
+.hero3 .bg.ph>img{width:auto;height:120px;opacity:.14;filter:none}
+.hero-tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,6,26,.42) 0%,rgba(19,6,26,.05) 32%,rgba(19,6,26,.08) 55%,rgba(19,6,26,.86) 100%)}
+.hero-top{position:relative;display:flex;justify-content:space-between;align-items:center;padding:16px 12px 0 20px}
+.hero-top>img{height:28px}
+.me-chip{all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;color:#E8D9B8;min-height:44px;padding:0 8px}
+.me-chip .t{font-family:var(--display);font-size:11px;letter-spacing:.22em}
+.me-chip .av{width:30px;height:30px;border-radius:15px;background:#3D1A40;border:1px solid rgba(201,168,111,.6);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}
+.hero-copy{position:absolute;left:20px;right:84px;bottom:26px;text-shadow:0 1px 10px rgba(19,6,26,.55)}
+.hero-copy h1{margin:10px 0 0;font-family:var(--display-zh);font-size:32px;line-height:1.25;font-weight:400;letter-spacing:.04em;color:#F5EEE2}
+.hero-copy h1 button{all:unset;cursor:pointer}
+.hero-copy .hs{margin-top:12px;font-size:13px;line-height:1.6;color:#BFA9C4}
+.ghostbtn{display:inline-flex;align-items:center;gap:8px;margin-top:18px;height:44px;padding:0 20px;border-radius:999px;border:1px solid #C9A86F;background:transparent;color:#E8D9B8;font-size:14px}
+.ghostbtn:hover{background:rgba(201,168,111,.12)}
+.ghostbtn:focus-visible,.me-chip:focus-visible,.dots button:focus-visible,.hero-copy h1 button:focus-visible{outline:2px solid #E8D9B8;outline-offset:2px}
+.dots{position:absolute;right:14px;bottom:26px;display:flex}
+.dots button{all:unset;cursor:pointer;width:22px;height:44px;display:flex;align-items:center;justify-content:center}
+.dots i{display:block;width:6px;height:2px;background:rgba(245,238,226,.4);transition:width .2s}
+.dots button[aria-selected="true"] i{width:16px;background:#C9A86F}
+.cstat{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;margin:14px 20px 0;width:calc(100% - 40px);padding:14px 16px;border-radius:14px;background:var(--surface-raised);border:1px solid var(--border);color:var(--ink)}
+.av2{position:relative;width:40px;height:40px;border-radius:20px;background:var(--plum-100);color:var(--av-ink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex:none}
+.av2 i{position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:5px;background:var(--success);border:2px solid var(--surface-raised)}
+.cstat b{display:block;font-size:14.5px;font-weight:600}
+.cstat .sm{display:block;margin-top:2px;font-size:13px;color:var(--ink-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nexttrip{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:14px;margin:12px 20px 0;width:calc(100% - 40px);color:var(--ink)}
+.nexttrip .photo,.nexttrip .ph{width:96px;height:96px;border-radius:12px;flex:0 0 96px}
+.nexttrip .bd{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.nexttrip .tt{font-family:var(--serif);font-size:16px;font-weight:600}
+.ptrow{margin:22px 20px 24px;display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border)}
+.ptrow button{all:unset;cursor:pointer;display:flex;align-items:baseline;gap:6px;min-height:44px;align-items:center}
+.ptrow b{font-family:var(--display);font-size:24px;font-weight:500;color:var(--ink)}
+.ptrow .u{font-size:12px;color:var(--accent-text)}
+/* member card · direction A */
+.card3{position:relative;overflow:hidden;border-radius:18px;padding:22px 24px;aspect-ratio:310/196;width:100%;max-width:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;color:var(--tier-ink);background-color:var(--tier-platinum);background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 1px,transparent 1px 4px),radial-gradient(ellipse at 18% -10%,rgba(201,168,111,.16),transparent 58%)}
+.card3 .wm{position:absolute;right:-34px;bottom:-54px;height:230px;opacity:.07;pointer-events:none}
+.card3 .top{display:flex;justify-content:space-between;align-items:flex-start;position:relative}
+.card3 .tn{font-family:var(--display);font-size:22px;line-height:26px;letter-spacing:.24em;color:var(--tier-foil)}
+.card3 .tz{font-size:12px;margin-top:4px;color:#BFA9C4}
+.card3 .mk{height:26px;opacity:.9}
+.card3 .foot{position:relative}
+.card3 .nm{font-family:var(--display);font-size:15px;letter-spacing:.2em}
+.card3 .ft{margin-top:6px;display:flex;justify-content:space-between;font-size:12px;color:#BFA9C4}
+.card3.gold{background-color:var(--tier-gold);color:var(--tier-ink-on-gold);background-image:repeating-linear-gradient(135deg,rgba(35,13,48,.045) 0 1px,transparent 1px 4px),radial-gradient(ellipse at 18% -10%,rgba(255,255,255,.55),transparent 58%)}
+.card3.gold .tn,.card3.gold .tz,.card3.gold .ft{color:var(--tier-gold-text)}
+.card3.gold img{filter:brightness(.18)} .card3.gold .wm{opacity:.09} .card3.gold .mk{opacity:.85}
+.card3.diamond{background-color:var(--tier-diamond)}
+.card3.diamond::after{content:"";position:absolute;left:24px;right:24px;bottom:16px;height:1px;background:var(--tier-foil);opacity:.7}
+.card3.diamond .foot{padding-bottom:10px}
+.card3.chairman{background-color:var(--tier-chairman)}
+.card3.chairman .tz,.card3.chairman .nm,.card3.chairman .ft{color:var(--tier-foil)}
+.card3.diamond .mk,.card3.chairman .mk,.card3.chairman .wm{filter:sepia(1) saturate(2.2) brightness(.82) hue-rotate(-8deg)}
+.card3.chairman .wm{opacity:.14}
+.linen{background-color:var(--tier-platinum);background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 1px,transparent 1px 4px),radial-gradient(ellipse at 18% -10%,rgba(201,168,111,.16),transparent 58%);color:var(--tier-ink)}
+.loader{width:56px;height:56px;position:relative;display:flex;align-items:center;justify-content:center}
+.loader::before{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--border);border-top-color:var(--accent);animation:sp 1.2s linear infinite}
+.loader img{height:24px;opacity:.85;filter:var(--mark-filter)}
+.empty .emk{height:34px;opacity:.35;filter:var(--mark-filter)}
+.empty .et{font-family:var(--display-zh);font-size:18px;letter-spacing:.04em;color:var(--ink)}
+.btn.sm{height:44px;padding:0 20px;font-size:14px;margin-top:4px}
+@media (prefers-reduced-motion:reduce){.loader::before{animation-duration:4s}.dots i{transition:none}}
+
 </style>
 </head>
 <body>
@@ -261,12 +333,13 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   <aside class="notes">
     <img src="../img/logo-light.png" alt="白鹿俱乐部">
     <div>
-      <div class="eyebrow">Leap Beyond</div>
+      <div class="eyebrow">WHITE DEER · V3</div>
       <h1>会员端 H5 高保真原型</h1>
     </div>
-    <p>按新版效果图和设计规范做的可点击原型，手机打开就是全屏。可以从“本季臻选”选一间酒店，走一遍选日期、提交、管家确认、支付的完整流程，行程和积分会跟着变。</p>
+    <p>按视觉升级 v3 设计稿做的可点击原型：满版摄影首页、材质压印会员卡、宋刻本标题字和统一的摄影处理。手机打开就是全屏。可以从首屏或“臻选”选一间酒店，走一遍选日期、提交、管家确认、支付的完整流程，行程和积分会跟着变。</p>
     <p>会员、价格和行程都是演示数据，不连真实系统。酒店以外的服务走“请管家安排”，本次不做供应商直连预订。</p>
-    <div class="themes" role="group" aria-label="主题"><button data-th="light">象牙</button><button data-th="dark">夜紫</button><button data-th="">跟随系统</button></div>
+    <div class="themes tiers" role="group" aria-label="会员卡等级"><button data-tier="gold">金卡</button><button data-tier="platinum">白金</button><button data-tier="diamond">钻石</button><button data-tier="chairman">荣誉主席</button></div>
+    <div class="themes" id="themeset" role="group" aria-label="主题"><button data-th="light">象牙</button><button data-th="dark">夜紫</button><button data-th="">跟随系统</button></div>
     <nav class="jump" id="jump" aria-label="页面跳转"></nav>
   </aside>
   <div class="phone"><div class="app" id="app"></div></div>
@@ -321,12 +394,30 @@ const DAYS=[24,25,26,27,28];
 const dl=d=>d>31?`11月${d-31}日`:`10月${d}日`;
 const wk=d=>WD[new Date(2026,9,d).getDay()];
 
-const S={
+const TIERS={
+  gold:{en:'GOLD',zh:'金卡会员',short:'金卡',no:'No. 1203',exp:'10 / 2027',from:'金卡',to:'白金',pct:61,prog:'本年度已累计 18,200 / 30,000 成长值'},
+  platinum:{en:'PLATINUM',zh:'白金会员',short:'白金',no:'No. 0088',exp:'10 / 2027',from:'白金',to:'钻石',pct:72,prog:'本年度已累计 54,600 / 76,000 成长值'},
+  diamond:{en:'DIAMOND',zh:'钻石会员',short:'钻石',no:'No. 0021',exp:'10 / 2027',from:'钻石',to:'',pct:100,prog:'本年度已累计 96,400 成长值 · 已保级'},
+  chairman:{en:'CHAIRMAN',zh:'荣誉主席 · 全球 25 席',short:'荣誉主席',no:'No. 07 / 25',exp:'终身',name:'HONORARY CHAIRMAN'}
+};
+const SLIDES=[
+  {id:'kyoto',ov:'KYOTO · THIS SEASON',h1:'四季酒店<br>池泉庭园套房',sub:'会员价 2,860 积分 / 晚起 · 含早餐与升房'},
+  {id:'tokyo',ov:'TOKYO · THIS SEASON',h1:'安缦东京<br>豪华客房',sub:'会员价 3,480 积分 / 晚起 · 含双人早餐'},
+  {id:'jet',ov:'PRIVATE AVIATION',h1:'私人飞机<br>单程包机',sub:'按航线、机型和人数单独报价'}
+];
+const CITY={kyoto:'KYOTO',tokyo:'TOKYO'};
+const dd=d=>d>31?`11.${String(d-31).padStart(2,'0')}`:`10.${d}`;
+function card3(){const t=TIERS[S.tier];
+  return `<div class="card3 ${S.tier}" role="img" aria-label="${t.zh}卡，${t.no}">
+    <img class="wm" src="../img/mark-gold.png" alt="">
+    <div class="top"><div><div class="tn">${t.en}</div><div class="tz">${t.zh}</div></div><img class="mk" src="../img/mark-gold.png" alt=""></div>
+    <div class="foot"><div class="nm">${t.name||'CHEN WEIMING'}</div><div class="ft"><span>${t.no}</span><span>${t.exp}</span></div></div></div>`;}
+const S={tier:'platinum',slide:0,
   route:'home',stack:[],points:128600,cat:'全部',tripTab:'up',pay:'points',fav:{},
   sel:{id:'kyoto',ci:25,co:27,guests:2},
   overlay:null,typing:false,unread:true,paying:false,
   trips:[
-    {id:'t1',title:'安缦东京 · 豪华客房',sub:'11月8日–10日 · 2 晚 · 2 位',img:'tokyo',status:['ok','已确认'],up:true},
+    {id:'t1',title:'安缦东京 · 豪华客房',sub:'11月8日–10日 · 2 晚 · 2 位',ov:'TOKYO · 11.08 – 11.10',note:'机场礼宾 · 接机已安排',img:'tokyo',status:['ok','已确认'],up:true},
     {id:'t2',title:'劳斯莱斯幻影 · 接机',sub:'11月8日 · 羽田机场',status:['ok','已确认'],up:true},
     {id:'t3',title:'私人飞机 · 新加坡 → 巴厘岛',sub:'12月20日 · 4 位 · 等待报价',status:['warn','报价中'],up:true},
     {id:'t4',title:'四季酒店 · 池泉庭园套房',sub:'2026年4月3日–5日 · 2 晚',img:'kyoto',status:['done','已完成'],up:false},
@@ -355,44 +446,32 @@ function quote(){
 
 const V={};
 const back=g=>`<button class="iconbtn${g?' glass':''}" data-act="back" aria-label="返回">${ic('back',g?20:22)}</button>`;
-const media=(it,cls='media')=>it.img?`<img class="${cls}" src="${IMG[it.img]}" alt="${esc(it.name)}">`:`<div class="${cls} ph" role="img" aria-label="${esc(it.name)}"><img src="../img/mark-gold.png" alt=""></div>`;
+const media=(it,cls='media')=>it.img?`<span class="photo ${cls}" role="img" aria-label="${esc(it.name)}"><img src="${IMG[it.img]}" alt=""></span>`:`<span class="${cls} ph" role="img" aria-label="${esc(it.name)}"><img src="../img/mark-gold.png" alt=""></span>`;
 const priceLine=it=>it.price===null?'按行程询价':it.price===0?'会员免费':`会员价 <b class="num">${fmt(it.price)}</b> 积分/${it.unit}起`;
 const up=()=>S.trips.filter(t=>t.up);
 
-V.home=()=>`
-  <div class="band hero">
-    <div class="bar"><img src="../img/logo-light.png" alt="白鹿俱乐部">
-      <div style="display:flex;color:var(--on-primary)">
-        <button class="iconbtn" style="color:#E8D9B8" data-go="explore" aria-label="搜索">${ic('search')}</button>
-        <button class="iconbtn" style="color:#E8D9B8" data-act="toast" data-msg="Grace：安缦东京 11 月 8 日入住已确认" aria-label="通知">${ic('bell')}</button>
-      </div></div>
-    <div class="sub" style="margin-top:22px">晚上好</div>
-    <h1>陈先生，欢迎回来</h1>
-  </div>
-  <button class="member tiercard" data-go="me" aria-label="白金会员卡，查看会籍">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start">
-      <div><div class="script" style="font-size:22px">Platinum</div><small>白金会员 · No. 0088</small></div>
-      <img src="../img/mark-gold.png" alt="" style="height:34px;opacity:.9">
+V.home=()=>{
+  const sl=SLIDES[S.slide],it=byId(sl.id),t=TIERS[S.tier],nx=up()[0];
+  const last=[...S.chat].reverse().find(m=>m.k==='g');
+  return `
+  <section class="hero3" aria-roledescription="轮播" aria-label="本季臻选">
+    <div class="bg${it.img?'':' ph'}" style="${it.img?'':'display:flex;align-items:center;justify-content:center;background:#3D1A40'}"><img src="${it.img?IMG[it.img]:'../img/mark-gold.png'}" alt=""></div>
+    <div class="hero-tint"></div>
+    <div class="hero-top"><img src="../img/logo-light.png" alt="白鹿俱乐部"><button class="me-chip" data-go="me" data-reset="1" aria-label="我的会籍"><span class="t">${t.en}</span><span class="av">陈</span></button></div>
+    <div class="hero-copy">
+      <div class="ov">${sl.ov}</div>
+      <h1><button data-open="${it.id}" aria-label="查看 ${esc(it.name)}">${sl.h1}</button></h1>
+      <div class="hs">${sl.sub}</div>
+      <button class="ghostbtn" data-act="heroAsk">请管家安排<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A86F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
     </div>
-    <div style="display:flex;gap:28px;margin-top:20px">
-      <div><div class="big num">${fmt(S.points)}</div><small>可用积分</small></div>
-      <div><div class="big num">${up().length}</div><small>待出行</small></div>
-    </div>
-    <div class="track" style="margin-top:16px"><i style="width:72%"></i></div>
-    <div style="margin-top:8px"><small>再消费 21,400 积分升级为钻石会员</small></div>
-  </button>
-  <div class="quick">
-    <button data-cat="出行"><span class="ring">${ic('plane')}</span>尊享出行</button>
-    <button data-cat="住宿"><span class="ring">${ic('bed')}</span>奢华住宿</button>
-    <button data-cat="家办"><span class="ring">${ic('bank')}</span>财富家办</button>
-    <button data-cat="豪车"><span class="ring">${ic('car')}</span>豪车礼宾</button>
-  </div>
-  <div class="h2row"><h2>本季臻选</h2><button class="link" data-cat="全部">全部</button></div>
-  <div class="rail">${ITEMS.slice(0,4).map(it=>`
-    <button class="card" data-open="${it.id}">${media(it)}
-      <div class="meta"><div class="over">${it.loc}</div><div class="nm">${esc(it.short)}</div><div class="pr">${priceLine(it)}</div></div>
-    </button>`).join('')}</div>`;
-
+    <div class="dots" role="tablist" aria-label="切换">${SLIDES.map((x,i)=>`<button role="tab" data-slide="${i}" aria-selected="${i===S.slide}" aria-label="第 ${i+1} 张"><i></i></button>`).join('')}</div>
+  </section>
+  <button class="cstat" data-go="concierge" data-reset="1"><span class="av2">G<i></i></span><span style="flex:1;min-width:0"><b>管家 Grace · 在线</b><span class="sm">${S.unread?'安缦东京的预约已确认，点击查看':esc(last?last.text:'有需要随时找我')}</span></span><span style="color:var(--ink-disabled);display:flex">${ic('right',18)}</span></button>
+  ${nx?`<div class="h2row"><h2>下一程</h2><button class="link" data-go="trips" data-reset="1">全部行程</button></div>
+  <button class="nexttrip" data-go="trips" data-reset="1">${nx.img?media({img:nx.img,name:nx.title},''):`<span class="ph" style="width:96px;height:96px;border-radius:12px;flex:none"><img src="../img/mark-gold.png" alt=""></span>`}
+    <span class="bd"><span class="ov lt">${nx.ov||''}</span><span class="tt">${esc(nx.title)}</span><span class="muted" style="font-size:13px">${esc(nx.note||nx.sub)}</span></span></button>`:''}
+  <div class="ptrow"><span class="muted" style="font-size:13px">可用积分</span><button data-go="points" aria-label="可用积分 ${fmt(S.points)}，查看明细"><b class="num">${fmt(S.points)}</b><span class="u">明细</span></button></div>`;
+};
 V.explore=()=>{
   const cats=['全部','住宿','出行','豪车','家办'],list=ITEMS.filter(i=>S.cat==='全部'||i.cat===S.cat);
   return `<div class="topbar" style="padding-left:20px"><h1>臻选</h1></div>
@@ -401,9 +480,9 @@ V.explore=()=>{
     <button class="card" data-open="${it.id}">${media(it)}
       <div class="meta"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="over">${it.loc}</span><span class="pill">${it.tag}</span></div>
       <div class="nm">${esc(it.name)}</div><div class="pr">${priceLine(it)}</div></div>
-    </button>`).join(''):emptyView('这个分类暂时没有服务','可以先和管家说您的需求')}</div>`;
+    </button>`).join(''):emptyView('这里暂时没有服务','告诉管家您的需求')}</div>`;
 };
-const emptyView=(t,s)=>`<div class="empty"><div class="mk"><img src="../img/mark-gold.png" alt=""></div><div style="font-size:15px;font-weight:500">${t}</div><div class="muted" style="font-size:13px">${s}</div></div>`;
+const emptyView=(t,s)=>`<div class=\"empty\"><img class=\"emk\" src=\"img/mark-gold.png\" alt=\"\"><div class=\"et\">${t}</div><div class=\"muted\" style=\"font-size:13px\">${s}</div><button class=\"btn sm\" data-go=\"concierge\" data-reset=\"1\">联系管家</button></div>`;
 
 V.detail=()=>{
   const it=byId(S.sel.id),fav=S.fav[it.id];let body='';
@@ -455,7 +534,7 @@ V.checkout=()=>{
   const m=(v,icon,t,s,dis)=>`<label class="method" for="pay-${v}"><span class="ic">${ic(icon)}</span><span style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:500">${t}</span><span class="muted" style="font-size:12px">${s}</span></span><input type="radio" name="pay" id="pay-${v}" value="${v}" ${S.pay===v?'checked':''} ${dis?'disabled':''}></label>`;
   return `<div class="topbar">${back()}<h1>确认支付</h1></div>
   <div style="padding:4px 16px 24px;display:flex;flex-direction:column;gap:14px">
-    <div class="card" style="display:flex;gap:12px;padding:12px">${media(it,'thumb" style="width:84px;height:84px;border-radius:10px;object-fit:cover;flex:none')}
+    <div class="card" style="display:flex;gap:12px;padding:12px">${media(it,'cthumb')}
       <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;min-width:0"><div style="font-family:var(--serif);font-size:15.5px;font-weight:600">${esc(it.name)}</div>
       <div class="muted" style="font-size:13px">${dl(S.sel.ci)}–${dl(S.sel.co).replace(/^10月/,'')} · ${q.n} 晚 · ${S.sel.guests} 位</div><span class="pill ok">管家 Grace 已确认</span></div></div>
     <div class="card sum">
@@ -487,10 +566,10 @@ V.trips=()=>{
   const list=S.trips.filter(t=>S.tripTab==='up'?t.up:!t.up);
   return `<div class="topbar" style="padding-left:20px"><h1>我的行程</h1></div>
   <div class="seg" role="group" aria-label="行程状态"><button data-tab="up" aria-pressed="${S.tripTab==='up'}">待出行 · ${up().length}</button><button data-tab="past" aria-pressed="${S.tripTab==='past'}">已完成</button></div>
-  <div class="vlist">${list.length?list.map(t=>`<div class="card trip">${t.img?`<img class="thumb" src="${IMG[t.img]}" alt="">`:`<div class="thumb ph"><img src="../img/mark-gold.png" alt=""></div>`}
+  <div class="vlist">${list.length?list.map(t=>`<div class="card trip">${media({img:t.img,name:t.title},'thumb')}
     <div class="body"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><div class="t">${esc(t.title)}</div><span class="pill ${t.status[0]}">${t.status[1]}</span></div>
     <div class="muted" style="font-size:13px">${esc(t.sub)}</div>
-    ${t.up?`<div style="display:flex;gap:16px;margin-top:2px"><button class="link" style="padding:6px 0" data-act="askAbout" data-t="${t.id}">联系管家</button><button class="link" style="padding:6px 0" data-act="toast" data-msg="行程单已发送到您的邮箱">发送行程单</button></div>`:''}</div></div>`).join(''):emptyView('还没有已完成的行程','完成的行程会出现在这里')}</div>`;
+    ${t.up?`<div style="display:flex;gap:16px;margin-top:2px"><button class="link" style="padding:6px 0" data-act="askAbout" data-t="${t.id}">联系管家</button><button class="link" style="padding:6px 0" data-act="toast" data-msg="行程单已发送到您的邮箱">发送行程单</button></div>`:''}</div></div>`).join(''):emptyView('还没有已完成的行程','管家可为您安排下一程')}</div>`;
 };
 
 V.concierge=()=>`<div class="band agent"><div class="avatar">G</div><div style="flex:1"><div style="font-family:var(--serif);font-size:17px;color:var(--ink-inverse)">Grace · 专属管家</div><div class="sub" style="font-size:12px">24 小时在线</div></div></div>
@@ -498,27 +577,22 @@ V.concierge=()=>`<div class="band agent"><div class="avatar">G</div><div style="
 function composer(){return `<div class="composer"><div class="chips">${['订当晚餐厅','安排接机','改行程日期','开发票'].map(c=>`<button data-quick="${c}">${c}</button>`).join('')}</div>
   <form id="cform"><label for="cmsg" style="position:absolute;left:-9999px">给管家留言</label><input id="cmsg" autocomplete="off" placeholder="告诉 Grace 您需要什么"><button class="send" aria-label="发送">${ic('send',20)}</button></form></div>`;}
 
-V.me=()=>`<div class="mhead">
-  <div style="display:flex;justify-content:space-between;align-items:center"><h1 style="margin:0;font-family:var(--serif);font-size:20px;color:var(--ink-inverse)">我的会籍</h1><button class="iconbtn" style="color:#E8D9B8" data-act="toast" data-msg="前台扫会员码即可识别您的身份" aria-label="会员码">${ic('qr')}</button></div>
-  <div class="tiercard mcard"><div style="display:flex;justify-content:space-between"><div class="script" style="font-size:30px">Platinum</div><img src="../img/mark-gold.png" alt="" style="height:38px"></div>
-    <div style="margin-top:26px;font-family:var(--display);font-size:18px;letter-spacing:.18em">CHEN · WEIMING</div>
-    <div style="margin-top:4px;display:flex;justify-content:space-between"><small>No. 0088</small><small>有效期至 2027.10</small></div></div>
-  <div style="margin-top:18px;display:flex;justify-content:space-between;font-size:12px;color:var(--ink-inverse-muted)"><span>白金</span><span>钻石</span></div>
-  <div class="track" style="margin-top:6px"><i style="width:72%"></i></div>
-  <div style="margin-top:8px;font-size:12px;color:var(--ink-inverse-muted)">本年度已累计 54,600 / 76,000 成长值</div>
+V.me=()=>{const t=TIERS[S.tier];return `<div class="mhead">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h1 style="margin:0;font-family:var(--display-zh);font-weight:400;letter-spacing:.04em;font-size:24px;color:var(--ink-inverse)">我的会籍</h1><button class="iconbtn" style="color:#E8D9B8" data-act="toast" data-msg="前台扫会员码即可识别您的身份" aria-label="会员码">${ic('qr')}</button></div>
+  <div style="margin-top:20px">${card3()}</div>
+  ${S.tier==='chairman'?'':`<div style="margin-top:18px;display:flex;justify-content:space-between;font-size:12px;color:var(--ink-inverse-muted)"><span>${t.from}</span><span>${t.to||'保级'}</span></div>
+  <div class="track" style="margin-top:6px"><i style="width:${t.pct}%"></i></div>
+  <div style="margin-top:8px;font-size:12px;color:var(--ink-inverse-muted)">${t.prog}</div>`}
 </div>
-<div style="padding:20px 20px 0"><h2 style="margin:0 0 12px;font-family:var(--serif);font-size:18px;color:var(--ink)">白金专享权益</h2>
+<div style="padding:20px 20px 0"><h2 style="margin:0 0 12px;font-family:var(--serif);font-size:18px;color:var(--ink)">${t.short}专享权益</h2>
   <div class="grid2">${[['plane','机场礼宾','全球 167 国'],['butler','专属管家','24 小时在线'],['bed','酒店升房','合作酒店'],['gift','生日礼遇','每年一次']].map(b=>`<div class="card">${ic(b[0],24)}<div style="font-size:14px;font-weight:600">${b[1]}</div><div class="muted" style="font-size:12px">${b[2]}</div></div>`).join('')}</div></div>
 <div class="rows" style="padding:10px 20px 24px">
   <button data-go="points"><span style="color:var(--primary-hover);display:flex">${ic('coin',20)}</span><span class="grow">积分明细</span><span style="color:var(--ink-disabled);display:flex">${ic('right',18)}</span></button>
   <button data-act="toast" data-msg="这一页在正式开发时补齐"><span style="color:var(--primary-hover);display:flex">${ic('doc',20)}</span><span class="grow">发票与账单</span><span style="color:var(--ink-disabled);display:flex">${ic('right',18)}</span></button>
   <button data-act="toast" data-msg="这一页在正式开发时补齐"><span style="color:var(--primary-hover);display:flex">${ic('gear',20)}</span><span class="grow">账户与安全</span><span style="color:var(--ink-disabled);display:flex">${ic('right',18)}</span></button>
-</div>`;
-
+</div>`;};
 V.points=()=>`<div class="topbar">${back()}<h1>积分明细</h1></div>
-  <div style="padding:4px 16px 0"><div class="tiercard" style="padding:18px 20px">
-    <small>可用积分</small><div class="num" style="font-family:var(--display);font-size:30px;line-height:34px;font-weight:600;margin-top:2px">${fmt(S.points)}</div>
-    <small>1 积分 ≈ S$ 1，可用于全部臻选服务</small></div></div>
+  <div style="padding:4px 16px 0"><div class="linen" style="position:relative;overflow:hidden;border-radius:18px;padding:18px 20px"><img src="../img/mark-gold.png" alt="" style="position:absolute;right:-30px;top:-24px;height:150px;opacity:.07"><div style="position:relative;font-size:12px;color:#BFA9C4">可用积分</div><div class="num" style="position:relative;font-family:var(--display);font-size:30px;line-height:34px;font-weight:600;margin-top:4px">${fmt(S.points)}</div><div style="position:relative;font-size:12px;color:#BFA9C4;margin-top:4px">1 积分 ≈ S$ 1，可用于全部臻选服务</div></div></div>
   <div style="padding:8px 20px 24px">${S.ledger.map(l=>`<div style="display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--border)"><div style="flex:1;min-width:0"><div style="font-size:15px">${esc(l.t)}</div><div class="muted" style="font-size:12px;margin-top:2px">${l.d}</div></div><b class="num" style="font-weight:600;color:${l.v>0?'var(--success)':'var(--ink)'}">${l.v>0?'+':'−'} ${fmt(Math.abs(l.v))}</b></div>`).join('')}</div>`;
 
 /* ---------- shell ---------- */
@@ -532,7 +606,7 @@ function render(keep){
   if(r==='detail')foot=detailBar();else if(r==='checkout')foot=checkoutBar();else if(r==='concierge')foot=composer();
   if(TABBED.includes(r))foot+=`<nav class="tabbar" aria-label="底部导航">${TABS.map(t=>`<button data-go="${t[0]}" data-reset="1" aria-current="${r===t[0]}">${ic(t[1])}<span>${t[2]}</span>${t[0]==='concierge'&&S.unread&&r!=='concierge'?'<i class="dot"></i><span style="position:absolute;left:-9999px">有新消息</span>':''}</button>`).join('')}</nav>`;
   let ov='';
-  if(S.overlay==='confirming')ov=`<div class="scrim"><div class="panel" role="status"><div class="spin"></div><h2>已提交给管家 Grace</h2><p class="muted" style="margin:0;font-size:14px">正在和酒店确认房态，确认后进入支付。积分尚未扣除。</p></div></div>`;
+  if(S.overlay==='confirming')ov=`<div class="scrim"><div class="panel" role="status"><div class="loader"><img src="../img/mark-gold.png" alt=""></div><h2>正在为您安排…</h2><p class="muted" style="margin:0;font-size:14px">已提交给管家 Grace，正在和酒店确认房态。积分尚未扣除。</p></div></div>`;
   app.innerHTML=`<main class="screen">${V[r]()}</main>${foot}${ov}`;
   const s=app.querySelector('.screen');s.scrollTop=r==='concierge'?s.scrollHeight:top;
   syncJump();
@@ -569,6 +643,7 @@ app.addEventListener('click',e=>{
     render(true);return;}
   if(d.guests){S.sel.guests=Math.min(4,Math.max(1,S.sel.guests+(+d.guests)));render(true);return;}
   if(d.quick){sendChat(d.quick);return;}
+  if(d.slide!==undefined){S.slide=+d.slide;render(true);return;}
   switch(d.act){
     case 'back':goBack();break;
     case 'toast':toast(d.msg);break;
@@ -577,27 +652,34 @@ app.addEventListener('click',e=>{
     case 'pay':{const q=quote();S.paying=true;render(true);
       setTimeout(()=>{
         if(S.pay==='points'){S.points-=q.total;S.ledger.unshift({t:`${q.it.short} · ${q.n} 晚`,d:'10月24日',v:-q.total});}
-        S.trips.unshift({id:'n'+Date.now(),title:q.it.name,sub:`${dl(S.sel.ci)}–${dl(S.sel.co).replace(/^10月/,'')} · ${q.n} 晚 · ${S.sel.guests} 位`,img:q.it.img,status:['ok','已确认'],up:true});
+        S.trips.unshift({id:'n'+Date.now(),title:q.it.name,sub:`${dl(S.sel.ci)}–${dl(S.sel.co).replace(/^10月/,'')} · ${q.n} 晚 · ${S.sel.guests} 位`,img:q.it.img,ov:`${CITY[q.it.id]||''} · ${dd(S.sel.ci)} – ${dd(S.sel.co)}`,note:'管家 Grace 已确认 · 行程单入住前发送',status:['ok','已确认'],up:true});
         S.paying=false;S.tripTab='up';S.stack=[];S.route='done';render();
       },1400);break;}
+    case 'heroAsk':{const it=byId(SLIDES[S.slide].id);S.stack=[];S.route='concierge';S.unread=false;render();sendChat(`我想预约：${it.name}`);break;}
     case 'askConcierge':{const it=byId(S.sel.id);S.stack=[];S.route='concierge';S.unread=false;render();sendChat(`我想预约：${it.name}`);break;}
     case 'askAbout':{const t=S.trips.find(x=>x.id===d.t);S.stack=[];S.route='concierge';S.unread=false;render();sendChat(`关于「${t.title}」，我想确认一下细节`);break;}
   }
 });
+let sx=null;app.addEventListener('pointerdown',e=>{sx=e.target.closest('.hero3')?e.clientX:null;});
+app.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>48){S.slide=(S.slide+(dx<0?1:SLIDES.length-1))%SLIDES.length;render(true);}});
 app.addEventListener('change',e=>{if(e.target.name==='pay'){S.pay=e.target.value;render(true);}});
 app.addEventListener('submit',e=>{e.preventDefault();const i=document.getElementById('cmsg'),v=i.value;i.value='';sendChat(v);setTimeout(()=>document.getElementById('cmsg')?.focus(),0);});
 
 /* review panel */
-const JUMP=[['效果图页面',null],['home','首页','效果图'],['detail','服务预约','效果图'],['checkout','确认支付','效果图'],['me','我的会籍','效果图'],['补充页面',null],['explore','臻选列表','补充'],['done','预订成功','补充'],['trips','我的行程','补充'],['concierge','管家对话','补充'],['points','积分明细','补充']];
+const JUMP=[['v3 设计稿',null],['home','首页','v3'],['me','我的会籍 · 卡面 A','v3'],['效果图 v2',null],['detail','服务预约','v2'],['checkout','确认支付','v2'],['补充页面',null],['explore','臻选列表','补充'],['done','预订成功','补充'],['trips','我的行程','补充'],['concierge','管家对话','补充'],['points','积分明细','补充']];
 const jump=document.getElementById('jump');
 function syncJump(){jump.innerHTML=JUMP.map(([k,l,t])=>l==null?`<div class="grp">${k}</div>`:`<button data-j="${k}" aria-current="${S.route===k}"><span>${l}</span><span class="tagx">${t}</span></button>`).join('');}
 jump.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.j;
   S.overlay=null;S.paying=false;
   if(k==='detail'||k==='checkout'||k==='done'){S.sel={id:'kyoto',ci:25,co:27,guests:2};}
-  if(k==='done'&&!S.trips[0].id.startsWith('n'))S.trips.unshift({id:'n0',title:'四季酒店 · 池泉庭园套房',sub:'10月25日–27日 · 2 晚 · 2 位',img:'kyoto',status:['ok','已确认'],up:true});
+  if(k==='done'&&!S.trips[0].id.startsWith('n'))S.trips.unshift({id:'n0',title:'四季酒店 · 池泉庭园套房',sub:'10月25日–27日 · 2 晚 · 2 位',ov:'KYOTO · 10.25 – 10.27',note:'管家 Grace 已确认 · 行程单入住前发送',img:'kyoto',status:['ok','已确认'],up:true});
   S.stack=TABBED.includes(k)?[]:(k==='checkout'?['home','detail']:k==='points'?['me']:['home']);
   S.route=k;if(k==='concierge')S.unread=false;render();});
-const themes=document.querySelector('.themes');
+const themes=document.getElementById('themeset');
+const tiersEl=document.querySelector('.tiers');
+function syncTier(){tiersEl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tier===S.tier)));}
+tiersEl.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.tier=b.dataset.tier;syncTier();render(true);});
+syncTier();
 function syncTheme(){const cur=document.documentElement.getAttribute('data-theme')||'';themes.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.th===cur)));}
 themes.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.th)document.documentElement.setAttribute('data-theme',b.dataset.th);else document.documentElement.removeAttribute('data-theme');syncTheme();});
 syncTheme();
