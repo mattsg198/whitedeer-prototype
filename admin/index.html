@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>白鹿管理后台原型</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap">
+<style>
+/* 白鹿俱乐部 设计规范 · 语义色（来自规范库 tokens.json）。light = 象牙（默认），dark = 夜紫。 */
+:root{
+  --surface:#F7F3EC; --surface-raised:#FFFFFF; --surface-sunken:#EFE8DD; --surface-inverse:#230D30; --surface-inverse-2:#13061A;
+  --border:#E6DED2; --border-strong:#8F8494;
+  --ink:#1E1622; --ink-muted:#6E6373; --ink-disabled:#A79DA9; --ink-inverse:#F5EEE2; --ink-inverse-muted:#BFA9C4;
+  --primary:#230D30; --primary-hover:#3D1A40; --on-primary:#E8D9B8;
+  --accent:#C9A86F; --accent-text:#8A6A35; --focus-ring:#8A6A35;
+  --tag-bg:#F3EBDD; --tag-text:#6B5128;
+  --success:#2F6B4F; --success-bg:#E4F0E9; --warning:#9A5B12; --warning-bg:#F7EBDA;
+  --danger:#9E3434; --danger-bg:#F6E3E3; --info:#2D5A8A; --info-bg:#E3ECF6;
+  --neutral-tag-bg:#EEE6F0; --neutral-tag:#3D1A40;
+  --plum-50:#F6F0F7; --plum-600:#5A2D5E; --neutral-400:#CFC6D0; --avatar-bg:#E8D9B8; --avatar-ink:#230D30;
+  --tier-platinum:#3D1A40; --tier-foil:#C9A86F; --tier-ink:#F5EEE2; --inverse-track:#3A2442; --inverse-line:#4A2A52; --inverse-tile:#2E1838;
+  --data-1:#3D1A40; --data-2:#C9A86F; --data-3:#2D5A8A; --data-4:#8E6695; --data-5:#B08F55;
+  --scrim:rgba(19,6,26,.55);
+  --shadow-2:0 8px 24px rgba(35,13,48,0.10); --shadow-3:0 16px 48px rgba(35,13,48,0.18);
+  --serif:"Noto Serif SC","Songti SC",serif;
+  --sans:"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+  --display:"Cormorant Garamond","Noto Serif SC",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --surface:#13061A; --surface-raised:#230D30; --surface-sunken:#0C0412; --surface-inverse:#2A1236; --surface-inverse-2:#0C0412;
+  --border:#3A2442; --border-strong:#85698C;
+  --ink:#F5EEE2; --ink-muted:#BFA9C4; --ink-disabled:#6B5A70; --ink-inverse:#F5EEE2; --ink-inverse-muted:#BFA9C4;
+  --primary:#C9A86F; --primary-hover:#D9C092; --on-primary:#13061A;
+  --accent:#C9A86F; --accent-text:#C9A86F; --focus-ring:#E8D9B8;
+  --tag-bg:#3A2A18; --tag-text:#E8D9B8;
+  --success:#8FC2A4; --success-bg:#1B2A22; --warning:#E3B877; --warning-bg:#33240F;
+  --danger:#E8A8A8; --danger-bg:#3A1A1C; --info:#9DB9DE; --info-bg:#16233A;
+  --neutral-tag-bg:#3A2442; --neutral-tag:#E8D9B8;
+  --plum-50:#2E1838; --plum-600:#B391B9; --neutral-400:#6B5A70; --avatar-bg:#3A2A18; --avatar-ink:#E8D9B8;
+  --inverse-track:#3A2442; --inverse-line:#4A2A52; --inverse-tile:#3A1F46;
+  --data-1:#B391B9; --data-2:#C9A86F; --data-3:#9DB9DE; --data-4:#D3BAD7; --data-5:#E3B877;
+  --shadow-2:0 8px 24px rgba(0,0,0,0.50); --shadow-3:0 16px 48px rgba(0,0,0,0.60);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --surface:#13061A; --surface-raised:#230D30; --surface-sunken:#0C0412; --surface-inverse:#2A1236; --surface-inverse-2:#0C0412;
+  --border:#3A2442; --border-strong:#85698C;
+  --ink:#F5EEE2; --ink-muted:#BFA9C4; --ink-disabled:#6B5A70; --ink-inverse:#F5EEE2; --ink-inverse-muted:#BFA9C4;
+  --primary:#C9A86F; --primary-hover:#D9C092; --on-primary:#13061A;
+  --accent:#C9A86F; --accent-text:#C9A86F; --focus-ring:#E8D9B8;
+  --tag-bg:#3A2A18; --tag-text:#E8D9B8;
+  --success:#8FC2A4; --success-bg:#1B2A22; --warning:#E3B877; --warning-bg:#33240F;
+  --danger:#E8A8A8; --danger-bg:#3A1A1C; --info:#9DB9DE; --info-bg:#16233A;
+  --neutral-tag-bg:#3A2442; --neutral-tag:#E8D9B8;
+  --plum-50:#2E1838; --plum-600:#B391B9; --neutral-400:#6B5A70; --avatar-bg:#3A2A18; --avatar-ink:#E8D9B8;
+  --inverse-track:#3A2442; --inverse-line:#4A2A52; --inverse-tile:#3A1F46;
+  --data-1:#B391B9; --data-2:#C9A86F; --data-3:#9DB9DE; --data-4:#D3BAD7; --data-5:#E3B877;
+  --shadow-2:0 8px 24px rgba(0,0,0,0.50); --shadow-3:0 16px 48px rgba(0,0,0,0.60);
+  color-scheme:dark;
+}
+
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:22px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--accent-text)}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.muted{color:var(--ink-muted)}
+
+/* ---------- shell ---------- */
+.shell{display:flex;min-height:100vh;min-height:100dvh}
+.side{flex:0 0 232px;width:232px;background:var(--surface-inverse-2);padding:24px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;height:100dvh;overflow-y:auto;padding-left:max(14px,env(safe-area-inset-left,0px))}
+.side .logo{height:34px;width:auto;align-self:flex-start;margin:0 0 26px 14px}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav a{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 14px 0 0;border-radius:10px;text-decoration:none;font-size:14px;color:var(--ink-inverse-muted)}
+.nav a::before{content:"";width:3px;height:20px;border-radius:2px;background:transparent;flex:none}
+.nav a:hover{background:var(--inverse-tile);color:var(--ink-inverse)}
+.nav a[aria-current="page"]{background:var(--inverse-track);color:var(--ink-inverse)}
+.nav a[aria-current="page"]::before{background:var(--accent)}
+.nav a[aria-current="page"] svg{color:var(--accent)}
+.side :focus-visible,.mbar :focus-visible{outline-color:var(--accent)}
+.side .foot{margin-top:auto;padding:16px 14px 0;font-size:12px;line-height:18px;color:var(--ink-inverse-muted)}
+
+.mbar{display:none}
+.main{flex:1 1 auto;min-width:0;padding:28px max(36px,env(safe-area-inset-right,0px)) 40px 36px;display:flex;flex-direction:column;gap:22px}
+
+/* page header */
+.phead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.crumb{font-size:12.5px;line-height:18px;color:var(--ink-muted)}
+.phead h1{margin:4px 0 0;font-family:var(--serif);font-size:26px;line-height:34px;font-weight:600;color:var(--ink)}
+.tools{display:flex;align-items:center;gap:10px}
+.search{display:flex;align-items:center;gap:8px;height:40px;padding:0 6px 0 14px;width:260px;background:var(--surface-raised);border:1px solid var(--border-strong);border-radius:999px;color:var(--ink-muted)}
+.search:focus-within{outline:2px solid var(--focus-ring);outline-offset:2px}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:13px;color:var(--ink)}
+.search input::placeholder{color:var(--ink-muted)}
+.search input::-webkit-search-cancel-button{display:none}
+.search .x{width:28px;height:28px;border:0;border-radius:14px;background:transparent;display:none;align-items:center;justify-content:center;color:var(--ink-muted);padding:0}
+.search.has .x{display:flex}
+.iconbtn{width:44px;height:44px;border:0;border-radius:22px;background:transparent;display:inline-flex;align-items:center;justify-content:center;color:var(--ink);padding:0;flex:none;position:relative}
+.iconbtn:hover{background:var(--surface-sunken)}
+.iconbtn .dot{position:absolute;top:10px;right:11px;width:7px;height:7px;border-radius:4px;background:var(--danger);border:1.5px solid var(--surface)}
+.avatar{width:36px;height:36px;border-radius:18px;background:var(--avatar-bg);color:var(--avatar-ink);display:flex;align-items:center;justify-content:center;font-weight:600;font-family:var(--serif);flex:none}
+
+/* cards */
+.card{background:var(--surface-raised);border:1px solid var(--border);border-radius:16px}
+.card h2{margin:0;font-family:var(--serif);font-size:18px;line-height:26px;font-weight:600;color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.kpi{padding:20px 22px;display:flex;flex-direction:column;gap:6px}
+.kpi .l{font-size:13px;color:var(--ink-muted)}
+.kpi .v{font-family:var(--display);font-size:36px;font-weight:600;line-height:1.1;color:var(--ink)}
+.kpi .d{font-size:12.5px;line-height:18px;color:var(--success)}
+.row2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px}
+.sec{padding:20px 22px}
+.sechead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.legend{display:flex;gap:16px;font-size:12.5px;color:var(--ink-muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:block}
+.chart{position:relative;margin-top:12px;height:270px;outline:none;border-radius:10px}
+.chart:focus-visible{outline:2px solid var(--focus-ring);outline-offset:4px}
+.chart svg{display:block;width:100%;height:270px;overflow:visible}
+.tip{position:absolute;top:0;left:0;pointer-events:none;background:var(--surface-raised);border:1px solid var(--border);box-shadow:var(--shadow-2);border-radius:10px;padding:8px 12px;font-size:12.5px;line-height:19px;white-space:nowrap;opacity:0;transition:opacity .12s}
+.tip.on{opacity:1}
+.tip b{display:block;font-weight:600;margin-bottom:2px}
+.tip span{display:flex;align-items:center;gap:6px}
+.tip i{width:8px;height:8px;border-radius:4px;display:block}
+.hot{display:flex;flex-direction:column;gap:14px}
+.bar{display:flex;flex-direction:column;gap:6px}
+.bar .t{display:flex;justify-content:space-between;font-size:13.5px}
+.bar .tr{height:6px;border-radius:3px;background:var(--surface-sunken)}
+.bar .tr i{display:block;height:6px;border-radius:3px;background:var(--data-1)}
+.link{font-size:13px;color:var(--accent-text);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;padding:0 4px}
+.link:hover{text-decoration:underline}
+
+/* table */
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:13px 11px;font-size:12.5px;line-height:18px;color:var(--ink-muted);font-weight:500;background:var(--surface-sunken);border-bottom:1px solid var(--border);white-space:nowrap}
+td{text-align:left;padding:13px 11px;font-size:13.5px;line-height:20px;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+.bk tbody tr{cursor:pointer}
+.bk tbody tr:hover td{background:var(--surface-sunken)}
+.bk tbody tr[aria-selected="true"] td{background:var(--plum-50)}
+.bk tbody tr[aria-selected="true"] td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+.rowbtn{all:unset;cursor:pointer;font-variant-numeric:tabular-nums;border-radius:4px}
+.rowbtn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:11px;font-size:12px;line-height:22px;font-weight:500;white-space:nowrap}
+.tag.warning{background:var(--warning-bg);color:var(--warning)}
+.tag.success{background:var(--success-bg);color:var(--success)}
+.tag.info{background:var(--info-bg);color:var(--info)}
+.tag.neutral{background:var(--neutral-tag-bg);color:var(--neutral-tag)}
+.tag.danger{background:var(--danger-bg);color:var(--danger)}
+
+/* bookings */
+.toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{height:36px;padding:0 16px;border-radius:999px;border:1px solid var(--border);background:var(--surface-raised);color:var(--ink);font-size:13px;white-space:nowrap}
+.chip:hover{border-color:var(--border-strong)}
+.chip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.btn{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--border);background:var(--surface-raised);font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:6px;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--border-strong)}
+.btn.lg{height:44px;font-size:14px;padding:0 20px}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.btn.primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+.btn.danger{background:var(--danger);border-color:var(--danger);color:var(--surface-raised)}
+.btn:disabled{background:var(--surface-sunken);border-color:var(--surface-sunken);color:var(--ink-disabled);cursor:not-allowed}
+.spin{width:16px;height:16px;border-radius:8px;border:2px solid currentColor;border-right-color:transparent;animation:sp .8s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.bklayout{display:flex;gap:16px;align-items:flex-start}
+.bklist{flex:1 1 auto;min-width:0;padding:8px 8px 4px}
+.listfoot{padding:10px 11px 8px;font-size:12.5px;line-height:18px;color:var(--ink-muted)}
+.detail{flex:0 0 300px;width:300px;padding:22px;display:flex;flex-direction:column;gap:14px;position:sticky;top:20px}
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.dhead h2{font-family:var(--serif);font-size:18px;line-height:26px;margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+.dimg{width:100%;height:140px;object-fit:cover;border-radius:12px;display:block}
+.dph{width:100%;height:140px;border-radius:12px;background:var(--surface-inverse);display:flex;align-items:center;justify-content:center}
+.dph img{height:60px;width:auto}
+.kv{font-size:13.5px;line-height:20px;display:flex;flex-direction:column;gap:8px}
+.kv div{display:flex;justify-content:space-between;gap:12px}
+.kv div span:first-child{color:var(--ink-muted);flex:none}
+.kv div span:last-child{text-align:right}
+.kv .tot{font-weight:600}
+.kv .tot span:first-child{color:var(--ink)}
+.log{border-top:1px solid var(--border);padding-top:12px;font-size:12.5px;line-height:19px;color:var(--ink-muted)}
+.log ol{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.log li{display:flex;gap:8px}
+.log li b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;flex:none}
+.log li.new b{color:var(--accent-text)}
+.acts{display:flex;gap:10px}
+.acts .btn{height:42px;font-size:14px}
+.acts .btn:first-child{flex:1}
+.acts .btn:last-child{flex:2}
+.note{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:20px;padding:12px 14px;border-radius:10px;background:var(--surface-sunken);color:var(--ink)}
+.note svg{flex:none;margin-top:2px;color:var(--ink-muted)}
+.note.danger{background:var(--danger-bg);color:var(--danger)}
+.note.danger svg{color:var(--danger)}
+.note.success{background:var(--success-bg);color:var(--success)}
+.note.success svg{color:var(--success)}
+
+/* empty states */
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:48px 20px}
+.empty .seal{width:64px;height:64px;border-radius:16px;background:var(--surface-inverse);display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.empty .seal img{height:40px;width:auto}
+.empty h3{margin:0;font-family:var(--serif);font-size:17px;line-height:24px;font-weight:600}
+.empty p{margin:0;font-size:13.5px;color:var(--ink-muted)}
+.module{flex:1;display:flex;align-items:center;justify-content:center;padding:72px 24px;min-height:420px}
+.module .in{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;max-width:360px}
+.module .seal{width:96px;height:96px;border-radius:24px;background:var(--surface-inverse);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.module .seal img{height:56px;width:auto}
+.module .eyebrow{font-family:var(--display);font-style:italic;font-size:20px;color:var(--accent-text)}
+.module h2{margin:0;font-family:var(--serif);font-size:24px;line-height:32px;font-weight:600}
+.module p{margin:0;color:var(--ink-muted);font-size:14px}
+.module .btn{margin-top:10px}
+
+/* drawer + modal */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--surface-raised);z-index:41;box-shadow:var(--shadow-3);transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;visibility:hidden}
+.drawer.on{transform:none;visibility:visible}
+.drawer .dbar{display:flex;align-items:center;justify-content:space-between;padding:10px 10px 0 22px}
+.drawer .dbar span{font-size:12.5px;color:var(--ink-muted)}
+.drawer .detail{position:static;flex:1 1 auto;width:auto;border:0;border-radius:0;overflow-y:auto;padding:8px 22px max(22px,env(safe-area-inset-bottom,0px))}
+.drawer .dimg,.drawer .dph{height:170px}
+.modalwrap{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px max(16px,env(safe-area-inset-right,0px)) 20px max(16px,env(safe-area-inset-left,0px))}
+.modalwrap[hidden]{display:none}
+.modal{position:relative;width:min(440px,100%);background:var(--surface-raised);border-radius:22px;box-shadow:var(--shadow-3);padding:24px;display:flex;flex-direction:column;gap:14px}
+.modal h3{margin:0;font-size:16px;line-height:24px;font-weight:600}
+.modal p{margin:0;font-size:13.5px;line-height:21px;color:var(--ink-muted)}
+.field label{display:block;font-size:12.5px;line-height:18px;font-weight:500;color:var(--ink-muted);margin-bottom:6px}
+.field textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--border-strong);border-radius:10px;background:var(--surface-raised);padding:10px 12px;font-size:14px;line-height:22px}
+.field textarea:focus{outline:2px solid var(--focus-ring);outline-offset:1px}
+.field textarea[aria-invalid="true"]{border-color:var(--danger)}
+.field .err{margin-top:6px;font-size:12.5px;line-height:18px;color:var(--danger)}
+.modal .row{display:flex;justify-content:flex-end;gap:10px}
+.toast{position:fixed;left:50%;bottom:max(28px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--surface-inverse);color:var(--ink-inverse);font-size:13px;line-height:20px;padding:10px 18px;border-radius:999px;z-index:60;box-shadow:var(--shadow-2);max-width:calc(100% - 32px);text-align:center}
+
+/* ---------- responsive ---------- */
+@media (max-width:1279px){ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:1100px){ .row2{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:899px){
+  .shell{flex-direction:column}
+  .side{display:none}
+  .mbar{display:block;position:sticky;top:0;z-index:30;background:var(--surface-inverse-2);padding:6px max(16px,env(safe-area-inset-right,0px)) 6px max(16px,env(safe-area-inset-left,0px))}
+  .mbar .top{display:flex;align-items:center;justify-content:space-between;height:48px}
+  .mbar .logo{height:28px;width:auto}
+  .mbar .iconbtn{color:var(--ink-inverse)}
+  .mbar .iconbtn:hover{background:var(--inverse-tile)}
+  .mbar .nav{display:none;padding:6px 0 12px;border-top:1px solid var(--inverse-line);margin-top:6px}
+  .mbar.open .nav{display:flex}
+  .main{padding:20px max(16px,env(safe-area-inset-right,0px)) 32px max(16px,env(safe-area-inset-left,0px));gap:18px}
+  .phead h1{font-size:24px;line-height:32px}
+  .tools{width:100%}
+  .search{flex:1 1 auto;width:auto}
+  .kpi{padding:16px 18px}
+  .sec{padding:18px 16px}
+}
+@media (max-width:560px){
+  .kpis{gap:12px}
+  .kpi .v{font-size:30px}
+  .chips{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:2px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .drawer{top:auto;left:0;width:100%;max-height:88vh;max-height:88dvh;border-radius:22px 22px 0 0;transform:translateY(100%)}
+  .drawer.on{transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation-duration:0s!important}
+  .spin{animation:none;border-right-color:currentColor;opacity:.6}
+}
+</style>
+</head>
+<body>
+
+
+<div class="shell">
+  <aside class="side" aria-label="后台导航">
+    <img class="logo" src="../img/logo-light.png" alt="白鹿俱乐部">
+    <nav class="nav" id="nav-side"></nav>
+    <div class="foot">管理后台原型 · 数据为演示</div>
+  </aside>
+  <header class="mbar" id="mbar">
+    <div class="top">
+      <img class="logo" src="../img/logo-light.png" alt="白鹿俱乐部">
+      <button class="iconbtn" id="menu-btn" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-top"></button>
+    </div>
+    <nav class="nav" id="nav-top" aria-label="后台导航"></nav>
+  </header>
+
+  <main class="main" id="main">
+    <div class="phead">
+      <div><div class="crumb" id="crumb">首页 / 运营看板</div><h1 id="ptitle">运营看板</h1></div>
+      <div class="tools">
+        <form class="search" id="search-form" role="search">
+          <span id="search-ic"></span>
+          <label for="q" class="sr">搜索会员、订单号</label>
+          <input id="q" type="search" placeholder="搜索会员、订单号" autocomplete="off">
+          <button type="button" class="x" id="q-clear" aria-label="清除搜索"></button>
+        </form>
+        <button class="iconbtn" id="bell" aria-label="通知"></button>
+        <span class="avatar" aria-label="当前账号：运营" role="img">运</span>
+      </div>
+    </div>
+    <div id="view" style="display:flex;flex-direction:column;gap:22px;flex:1"></div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="预约详情">
+  <div class="dbar"><span>预约详情</span><button class="iconbtn" id="drawer-close" aria-label="关闭详情"></button></div>
+  <div id="drawer-body" style="display:flex;flex-direction:column;flex:1;min-height:0"></div>
+</aside>
+<div class="modalwrap" id="modal" hidden>
+  <div class="scrim on" data-act="modal-cancel" style="position:absolute;z-index:0"></div>
+  <form class="modal" id="reject-form" role="dialog" aria-modal="true" aria-labelledby="reject-title" novalidate>
+    <h3 id="reject-title">驳回预约</h3>
+    <p id="reject-desc"></p>
+    <div class="field">
+      <label for="reject-reason">驳回原因（必填，会员可以看到）</label>
+      <textarea id="reject-reason" placeholder="例如：所选日期已无房，请会员改期" aria-describedby="reject-err"></textarea>
+      <div class="err" id="reject-err" role="alert"></div>
+    </div>
+    <div class="row">
+      <button type="button" class="btn lg" data-act="modal-cancel" id="reject-cancel">取消</button>
+      <button type="submit" class="btn lg danger" id="reject-ok">确认驳回</button>
+    </div>
+  </form>
+</div>
+
+<script>
+(function(){
+/* ---------- icons ---------- */
+const P={
+  dash:'<path d="M4 20V4"/><path d="M4 20h16"/><path d="M7 15l4-4 3 3 5-6"/>',
+  members:'<circle cx="9" cy="9" r="3.5"/><path d="M2.5 20c1-3.5 3.6-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M15.5 5.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.8c1.8.8 3 2.6 3.5 5.2"/>',
+  cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/><path d="M9 3v4"/><path d="M15 3v4"/>',
+  box:'<path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/>',
+  coin:'<circle cx="12" cy="12" r="8"/><path d="M9.5 9.5h3.5a1.8 1.8 0 0 1 0 3.5h-3a1.8 1.8 0 0 0 0 3.5H14"/><path d="M12 7v2"/><path d="M12 17v-1"/>',
+  doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6"/><path d="M9 16h6"/>',
+  star:'<path d="M12 4l2.4 5 5.4.6-4 3.7 1.1 5.3L12 16l-4.9 2.6 1.1-5.3-4-3.7 5.4-.6z"/>',
+  chat:'<path d="M5 18l-1 3 3.5-1.5A8 8 0 1 0 5 18z"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="M2 12h3"/><path d="M19 12h3"/><path d="M4.9 4.9l2.1 2.1"/><path d="M17 17l2.1 2.1"/><path d="M4.9 19.1L7 17"/><path d="M17 7l2.1-2.1"/>',
+  search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  filter:'<path d="M4 5h16l-6 7v6l-4 2v-8z"/>',
+  download:'<path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/>',
+  menu:'<path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>',
+  close:'<path d="M6 6l12 12"/><path d="M18 6L6 18"/>',
+  info:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><path d="M12 8h.01"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>'
+};
+const ic=(n,s=19)=>`<svg aria-hidden="true" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
+const fmt=n=>n.toLocaleString('en-US');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const now=()=>{const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
+
+/* ---------- data ---------- */
+const NAV=[
+  ['dashboard','dash','运营看板'],['members','members','会员管理'],['bookings','cal','预约管理'],['shop','box','商城订单'],
+  ['points','coin','积分与支付'],['invoices','doc','发票'],['events','star','活动'],['service','chat','客服会话'],['settings','gear','系统设置']
+];
+const EN={members:'Members',shop:'Boutique',points:'Points',invoices:'Invoices',events:'Events',service:'Concierge',settings:'Settings'};
+
+const MONTHS=['11月','12月','1月','2月','3月','4月','5月','6月','7月','8月','9月','10月'];
+/* 点位照效果图（0–220 的纵向坐标），数值按 10 月 = S$ 412,800 / 347 单 折算 */
+const YR=[127.6,114.4,121.0,96.8,85.8,92.4,74.8,61.6,68.2,48.4,35.2,22.0];
+const YB=[154.0,147.4,143.0,145.2,132.0,125.4,129.8,116.6,110.0,112.2,99.0,92.4];
+const REV=[192600,220200,206400,256900,279800,266000,302700,330200,316500,357800,385300,412800];
+const BKS=[179,197,209,203,239,257,245,281,299,293,329,347];
+
+const TAGS={'待审核':'warning','已确认':'success','已支付':'info','报价中':'warning','已完成':'neutral','已退款':'danger','已驳回':'danger'};
+const FILTER_OF={'待审核':'pending','已确认':'confirmed','已支付':'paid','已完成':'done','已退款':'cancelled','已驳回':'cancelled'};
+const FILTERS=[['all','全部'],['pending','待审核'],['confirmed','已确认'],['paid','已支付'],['done','已完成'],['cancelled','已取消']];
+
+const S={
+  route:'dashboard', filter:'all', q:'', sel:'WD20261024-018', drawer:false, busy:null,
+  counts:{all:347,pending:21,confirmed:96,paid:158,done:61,cancelled:11},
+  rows:[
+    {id:'WD20261024-018',m:'陈伟明',tier:'白金',svc:'京都四季酒店 · 池泉庭园套房',date:'10月25日–27日',butler:'Grace',st:'待审核',pts:'5,148',img:'../img/kyoto.jpg',
+      kv:[['入住','10月25日–27日 · 2 位'],['库存','当日余 2 间','ok'],['会员折扣','9 折 · −572']],pay:'5,148 积分',
+      log:[['10:12','会员提交'],['10:15','系统校验库存通过']]},
+    {id:'WD20261024-016',m:'林雅婷',tier:'钻石',svc:'樟宜机场 CIP 礼宾 · 2 位',date:'10月24日 14:30',butler:'Grace',st:'已确认',pts:'1,200',
+      kv:[['日期','10月24日 14:30 · 2 位']],pay:'1,200 积分',
+      log:[['09:02','会员提交'],['09:20','Grace 核对航班信息'],['09:31','运营审核通过']]},
+    {id:'WD20261023-011',m:'Sophia Tan',tier:'白金',svc:'游艇包船 · 圣淘沙 4 小时',date:'11月02日',butler:'Kevin',st:'已确认',pts:'6,400',
+      kv:[['日期','11月02日 · 4 小时']],pay:'6,400 积分',
+      log:[['10月23日 15:40','会员提交'],['10月23日 16:05','运营审核通过']]},
+    {id:'WD20261022-007',m:'黄子轩',tier:'金卡',svc:'安缦东京 · 豪华客房',date:'11月10日–13日',butler:'Kevin',st:'已支付',pts:'10,752',img:'../img/tokyo.jpg',
+      kv:[['入住','11月10日–13日 · 2 位']],pay:'10,752 积分',
+      log:[['10月22日 11:08','会员提交'],['10月22日 11:30','运营审核通过'],['10月22日 13:47','会员积分支付 10,752']]},
+    {id:'WD20261021-004',m:'王思远',tier:'钻石',svc:'私人飞机 · 新加坡–巴厘岛',date:'11月15日',butler:'Grace',st:'报价中',pts:'待定',
+      kv:[['日期','11月15日']],pay:'待定',
+      log:[['10月21日 18:20','会员提交需求'],['10月21日 18:45','Grace 开始询价']]},
+    {id:'WD20261020-002',m:'刘嘉怡',tier:'白金',svc:'高端体检 · 莱佛士医院',date:'10月21日',butler:'Mia',st:'已完成',pts:'3,600',
+      kv:[['日期','10月21日']],pay:'3,600 积分',
+      log:[['10月20日 09:10','会员提交'],['10月20日 09:40','运营审核通过'],['10月20日 10:02','会员积分支付 3,600'],['10月21日 12:30','服务完成']]},
+    {id:'WD20261018-015',m:'Daniel Lim',tier:'金卡',svc:'尊享出行 · 劳斯莱斯接送',date:'10月18日',butler:'Mia',st:'已完成',pts:'900',
+      kv:[['日期','10月18日']],pay:'900 积分',
+      log:[['10月17日 20:15','会员提交'],['10月17日 20:30','运营审核通过'],['10月18日 19:05','服务完成']]},
+    {id:'WD20261017-009',m:'林雅婷',tier:'钻石',svc:'家办设立咨询 · Hawksford',date:'10月17日',butler:'Grace',st:'已完成',pts:'—',
+      kv:[['日期','10月17日']],pay:'—',
+      log:[['10月15日 14:00','会员提交'],['10月17日 16:00','面谈完成']]},
+    {id:'WD20261019-021',m:'陈伟明',tier:'白金',svc:'F1 新加坡大奖赛 · 包厢',date:'10月03日',butler:'Grace',st:'已退款',pts:'8,800',
+      kv:[['日期','10月03日']],pay:'8,800 积分',
+      log:[['—','会员提交'],['—','会员积分支付 8,800'],['—','财务退款 · 8,800 积分已退回会员账户']]}
+  ],
+  latest:[
+    {m:'陈伟明 · 白金',svc:'京都四季酒店 · 2 晚',date:'10月25日',ref:'WD20261024-018',pts:'5,148'},
+    {m:'林雅婷 · 钻石',svc:'樟宜机场 CIP 礼宾',date:'10月24日',ref:'WD20261024-016',pts:'1,200'},
+    {m:'黄子轩 · 金卡',svc:'F1 新加坡大奖赛包厢',date:'10月03日',st:'已完成',pts:'8,800'},
+    {m:'Sophia Tan · 白金',svc:'游艇包船 · 圣淘沙',date:'11月02日',ref:'WD20261023-011',pts:'6,400'}
+  ]
+};
+const rowById=id=>S.rows.find(r=>r.id===id);
+const tag=st=>`<span class="tag ${TAGS[st]||'neutral'}">${st}</span>`;
+
+/* ---------- static chrome ---------- */
+const navHTML=()=>NAV.map(([k,i,l])=>`<a href="#${k}" data-nav="${k}" ${S.route===k?'aria-current="page"':''}>${ic(i)}${l}</a>`).join('');
+document.getElementById('search-ic').innerHTML=ic('search',17);
+document.getElementById('q-clear').innerHTML=ic('close',16);
+document.getElementById('bell').innerHTML=ic('bell',22)+'<i class="dot" aria-hidden="true"></i>';
+document.getElementById('drawer-close').innerHTML=ic('close',22);
+const menuBtn=document.getElementById('menu-btn'), mbar=document.getElementById('mbar');
+function setMenu(open){ mbar.classList.toggle('open',open); menuBtn.setAttribute('aria-expanded',open); menuBtn.setAttribute('aria-label',open?'收起菜单':'打开菜单'); menuBtn.innerHTML=ic(open?'close':'menu',24); }
+setMenu(false);
+
+const view=document.getElementById('view');
+const qInput=document.getElementById('q'), qForm=document.getElementById('search-form');
+const wide=window.matchMedia('(min-width:1180px)');
+
+/* ---------- dashboard ---------- */
+function vDashboard(){
+  const hot=[['奢华住宿',128,92],['机场礼宾',86,64],['私人飞机',31,28],['财富家办',24,22],['高端医疗',19,17]];
+  const k=(l,v,d)=>`<div class="card kpi"><div class="l">${l}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`;
+  return `
+  <div class="kpis">
+    ${k('本月营收（S$）','412,800','较上月 +12.4%')}
+    ${k('活跃会员','1,286','本月新增 38')}
+    ${k('本月预约','347',`<span id="kpi-pending">待审核 ${S.counts.pending}</span>`)}
+    ${k('会员满意度','4.8','基于 162 条评价')}
+  </div>
+  <div class="row2">
+    <section class="card sec" aria-labelledby="h-trend">
+      <div class="sechead"><h2 id="h-trend">营收与预约趋势</h2>
+        <div class="legend"><span><i style="background:var(--data-1)"></i>营收</span><span><i style="background:var(--data-2)"></i>预约量</span></div></div>
+      <div class="chart" id="chart" tabindex="0" role="img" aria-label="近 12 个月营收与预约趋势，10 月营收 S$ 412,800，预约 347 单。可用左右方向键逐月查看。"></div>
+    </section>
+    <section class="card sec hot" aria-labelledby="h-hot">
+      <h2 id="h-hot">热门服务</h2>
+      ${hot.map(h=>`<div class="bar"><div class="t"><span>${h[0]}</span><span class="muted num">${h[1]} 单</span></div><div class="tr"><i style="width:${h[2]}%"></i></div></div>`).join('')}
+    </section>
+  </div>
+  <section class="card sec" aria-labelledby="h-latest">
+    <div class="sechead"><h2 id="h-latest">最新预约</h2><a class="link" href="#bookings">查看全部</a></div>
+    <div class="tablewrap" style="margin-top:8px"><table>
+      <thead><tr><th>会员</th><th>服务</th><th>日期</th><th>状态</th><th>金额（积分）</th></tr></thead>
+      <tbody>${S.latest.map(r=>{const st=r.ref?rowById(r.ref).st:r.st;return `<tr><td>${esc(r.m)}</td><td>${esc(r.svc)}</td><td>${r.date}</td><td>${tag(st)}</td><td class="num">${r.pts}</td></tr>`;}).join('')}</tbody>
+    </table></div>
+  </section>`;
+}
+
+let chartIdx=-1, chartRO=null;
+function drawChart(){
+  const box=document.getElementById('chart'); if(!box)return;
+  const W=Math.max(260,box.clientWidth), H=270, L=22, R=22, T=14;
+  const ph=H-50, sx=i=>L+i*(W-L-R)/11, sy=y=>T+y/220*ph;
+  const pts=a=>a.map((y,i)=>`${i?'L':'M'}${sx(i).toFixed(1)},${sy(y).toFixed(1)}`).join(' ');
+  const grid=[0,55,110,165,220].map(y=>`<line x1="${L}" x2="${W-R}" y1="${sy(y)}" y2="${sy(y)}" stroke="var(--border)" stroke-width="1"/>`).join('');
+  const step=W<480?2:1;
+  const labels=MONTHS.map((m,i)=>(i%step===(11%step))?`<text x="${sx(i)}" y="${T+ph+26}" font-size="11" fill="var(--ink-muted)" text-anchor="middle" font-family="var(--sans)">${m}</text>`:'').join('');
+  const e1=[sx(11),sy(YR[11])], e2=[sx(11),sy(YB[11])];
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">
+    ${grid}
+    <line id="guide" x1="0" x2="0" y1="${T}" y2="${T+ph}" stroke="var(--border-strong)" stroke-dasharray="3 3" opacity="0"/>
+    <path d="${pts(YR)}" fill="none" stroke="var(--data-1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="${pts(YB)}" fill="none" stroke="var(--data-2)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${e1[0]}" cy="${e1[1]}" r="5" fill="var(--data-1)" stroke="var(--surface-raised)" stroke-width="2"/>
+    <circle cx="${e2[0]}" cy="${e2[1]}" r="5" fill="var(--data-2)" stroke="var(--surface-raised)" stroke-width="2"/>
+    <text x="${e1[0]-10}" y="${e1[1]-10}" font-size="12" font-weight="600" fill="var(--ink)" text-anchor="end" font-family="var(--sans)">S$ 412,800</text>
+    <text x="${e2[0]-10}" y="${e2[1]-10}" font-size="12" font-weight="600" fill="var(--ink)" text-anchor="end" font-family="var(--sans)">347 单</text>
+    <g id="hov" opacity="0"><circle id="h1" r="4.5" fill="var(--surface-raised)" stroke="var(--data-1)" stroke-width="2.5"/><circle id="h2" r="4.5" fill="var(--surface-raised)" stroke="var(--data-2)" stroke-width="2.5"/></g>
+    ${labels}
+  </svg><div class="tip" id="tip" aria-hidden="true"></div>`;
+  box._geo={W,sx,sy,T,ph};
+  if(chartIdx>=0)showTip(chartIdx);
+}
+function showTip(i){
+  const box=document.getElementById('chart'); if(!box||!box._geo)return;
+  const {W,sx,sy}=box._geo; chartIdx=i;
+  const x=sx(i), g=box.querySelector('#guide'), hov=box.querySelector('#hov'), tip=box.querySelector('#tip');
+  g.setAttribute('x1',x); g.setAttribute('x2',x); g.setAttribute('opacity','1');
+  box.querySelector('#h1').setAttribute('cx',x); box.querySelector('#h1').setAttribute('cy',sy(YR[i]));
+  box.querySelector('#h2').setAttribute('cx',x); box.querySelector('#h2').setAttribute('cy',sy(YB[i]));
+  hov.setAttribute('opacity','1');
+  tip.innerHTML=`<b>${MONTHS[i]}</b><span><i style="background:var(--data-1)"></i>营收 S$ ${fmt(REV[i])}</span><span><i style="background:var(--data-2)"></i>预约 ${BKS[i]} 单</span>`;
+  tip.classList.add('on');
+  const tw=tip.offsetWidth, top=Math.min(sy(YR[i]),sy(YB[i]));
+  let left=x+14; if(left+tw>W) left=x-14-tw; if(left<0) left=0;
+  tip.style.transform=`translate(${left}px,${Math.max(0,top-56)}px)`;
+}
+function hideTip(){
+  const box=document.getElementById('chart'); if(!box)return; chartIdx=-1;
+  box.querySelector('#tip')?.classList.remove('on');
+  box.querySelector('#guide')?.setAttribute('opacity','0'); box.querySelector('#hov')?.setAttribute('opacity','0');
+}
+function bindChart(){
+  const box=document.getElementById('chart'); if(!box)return;
+  drawChart();
+  if(chartRO)chartRO.disconnect();
+  if('ResizeObserver' in window){ chartRO=new ResizeObserver(()=>drawChart()); chartRO.observe(box); }
+  const pick=clientX=>{const r=box.getBoundingClientRect(); const {W,sx}=box._geo; const px=(clientX-r.left)*W/r.width; let best=0,bd=1e9; for(let i=0;i<12;i++){const d=Math.abs(sx(i)-px); if(d<bd){bd=d;best=i;}} return best;};
+  box.addEventListener('pointermove',e=>showTip(pick(e.clientX)));
+  box.addEventListener('pointerleave',hideTip);
+  box.addEventListener('blur',hideTip);
+  box.addEventListener('focus',()=>showTip(11));
+  box.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'){e.preventDefault();showTip(Math.min(11,(chartIdx<0?11:chartIdx+1)));}
+    if(e.key==='ArrowLeft'){e.preventDefault();showTip(Math.max(0,(chartIdx<0?11:chartIdx-1)));}
+    if(e.key==='Escape')hideTip();
+  });
+}
+
+/* ---------- bookings ---------- */
+function visibleRows(){
+  const q=S.q.trim().toLowerCase();
+  return S.rows.filter(r=>(S.filter==='all'||FILTER_OF[r.st]===S.filter)&&(!q||r.m.toLowerCase().includes(q)||r.id.toLowerCase().includes(q)));
+}
+function statusNote(r){
+  const N=(cls,icn,t)=>`<div class="note ${cls}">${ic(icn,16)}<span>${t}</span></div>`;
+  switch(r.st){
+    case '已确认': return N('success','check','已审核通过，等待会员支付。');
+    case '已支付': return N('','info','会员已支付，如需退款请联系财务。');
+    case '报价中': return N('','info',`管家 ${esc(r.butler)} 正在询价，报价发给会员后再进入审核。`);
+    case '已完成': return N('','check','服务已完成，无需操作。');
+    case '已退款': return N('danger','info','已退款，积分已退回会员账户。');
+    case '已驳回': return N('danger','info','已驳回 · 积分未扣除。会员可以重新提交。');
+    default: return '';
+  }
+}
+function detailHTML(r){
+  if(!r) return `<div class="empty"><div class="seal"><img src="../img/mark-gold.png" alt=""></div><h3>选择一条预约</h3><p>点左侧表格中的一行查看详情</p></div>`;
+  const pending=r.st==='待审核', busy=S.busy===r.id;
+  return `<div class="dhead"><h2>${r.id}</h2>${tag(r.st)}</div>
+    ${r.img?`<img class="dimg" src="${r.img}" alt="${esc(r.svc)}">`:`<div class="dph"><img src="../img/mark-gold.png" alt=""></div>`}
+    <div style="font-family:var(--serif);font-size:15px;line-height:22px;font-weight:600">${esc(r.svc)}</div>
+    <div class="kv">
+      <div><span>会员</span><span>${esc(r.m)} · ${r.tier}</span></div>
+      ${r.kv.map(([a,b,c])=>`<div><span>${a}</span><span${c==='ok'?' style="color:var(--success)"':''}>${esc(b)}</span></div>`).join('')}
+      <div><span>管家</span><span>${esc(r.butler)}</span></div>
+      <div class="tot"><span>应付</span><span class="num">${r.pay}</span></div>
+    </div>
+    <div class="log">操作记录<ol>${r.log.map(([t,e,n])=>`<li${n?' class="new"':''}><b>${t}</b><span>${esc(e)}</span></li>`).join('')}</ol></div>
+    ${pending?`<div class="acts">
+        <button class="btn" data-act="reject" data-id="${r.id}" id="btn-reject" ${busy?'disabled':''}>驳回</button>
+        <button class="btn primary" data-act="approve" data-id="${r.id}" id="btn-approve" ${busy?'disabled aria-busy="true"':''}>${busy?'<span class="spin" aria-hidden="true"></span>处理中':'审核通过'}</button>
+      </div>`:statusNote(r)}`;
+}
+function vBookings(){
+  const rows=visibleRows(), sel=rowById(S.sel);
+  const q=S.q.trim();
+  let body;
+  if(!rows.length){
+    body=q?`<div class="empty"><div class="seal"><img src="../img/mark-gold.png" alt=""></div><h3>没有找到匹配的预约</h3><p>“${esc(q)}”在当前筛选下没有结果，可按会员名或预约号搜索</p><button class="btn" data-act="clear-search" id="btn-clear-search">清除搜索</button></div>`
+      :`<div class="empty"><div class="seal"><img src="../img/mark-gold.png" alt=""></div><h3>这个状态下没有示例</h3><p>原型里只放了 9 条示例预约</p><button class="btn" data-filter="all">查看全部</button></div>`;
+  } else {
+    body=`<div class="tablewrap"><table class="bk" aria-label="预约列表">
+      <thead><tr><th>预约号</th><th>会员</th><th>服务</th><th>日期</th><th>管家</th><th>状态</th><th>积分</th></tr></thead>
+      <tbody>${rows.map(r=>`<tr data-row="${r.id}" aria-selected="${S.sel===r.id}">
+        <td><button class="rowbtn" data-pick="${r.id}" aria-label="查看 ${r.id} 详情">${r.id}</button></td><td>${esc(r.m)}</td><td>${esc(r.svc)}</td><td>${r.date}</td><td>${esc(r.butler)}</td><td>${tag(r.st)}</td><td class="num">${r.pts}</td></tr>`).join('')}</tbody>
+    </table></div>`;
+  }
+  return `
+  <div class="toolbar">
+    <div class="chips" role="group" aria-label="按状态筛选">${FILTERS.map(([k,l])=>`<button class="chip" data-filter="${k}" id="f-${k}" aria-pressed="${S.filter===k}">${l} <span class="num">${S.counts[k]}</span></button>`).join('')}</div>
+    <div style="display:flex;gap:10px"><button class="btn" data-act="toast" data-msg="这一页在正式开发时补齐" id="btn-filter">${ic('filter',16)}筛选</button><button class="btn" data-act="toast" data-msg="正式版支持导出 Excel" id="btn-export">${ic('download',16)}导出</button></div>
+  </div>
+  <div class="bklayout">
+    <section class="card bklist" aria-label="预约列表">${body}<div class="listfoot" role="status">当前显示 ${rows.length} 条示例 · 原型共 9 条，筛选按钮上是本月全部预约数</div></section>
+    ${wide.matches?`<aside class="card detail" aria-label="预约详情" id="detail-inline">${detailHTML(sel)}</aside>`:''}
+  </div>`;
+}
+
+/* ---------- other modules ---------- */
+function vModule(k){
+  const n=NAV.find(x=>x[0]===k)[2];
+  return `<section class="card module" aria-labelledby="h-mod"><div class="in">
+    <div class="seal"><img src="../img/mark-gold.png" alt="白鹿标志"></div>
+    <div class="eyebrow">${EN[k]}</div>
+    <h2 id="h-mod">${n}</h2>
+    <p>这一页在正式开发时补齐</p>
+    <a class="btn lg" href="#dashboard">回到运营看板</a>
+  </div></section>`;
+}
+
+/* ---------- render ---------- */
+const scrim=document.getElementById('scrim'), drawer=document.getElementById('drawer'), dBody=document.getElementById('drawer-body');
+let lastFocus=null;
+function renderDrawer(){
+  const open=S.route==='bookings'&&!wide.matches&&S.drawer;
+  if(open){ dBody.innerHTML=`<div class="card detail">${detailHTML(rowById(S.sel))}</div>`; }
+  drawer.classList.toggle('on',open); scrim.classList.toggle('on',open);
+  drawer.setAttribute('aria-hidden',!open);
+}
+function render(){
+  const r=S.route;
+  document.getElementById('nav-side').innerHTML=navHTML();
+  document.getElementById('nav-top').innerHTML=navHTML();
+  const name=NAV.find(x=>x[0]===r)[2];
+  document.getElementById('crumb').textContent=r==='bookings'?'业务 / 预约管理':'首页 / '+name;
+  document.getElementById('ptitle').textContent=name;
+  if(chartRO){chartRO.disconnect();chartRO=null;}
+  view.innerHTML=r==='dashboard'?vDashboard():r==='bookings'?vBookings():vModule(r);
+  if(r==='dashboard')bindChart();
+  qForm.classList.toggle('has',!!S.q);
+  renderDrawer();
+}
+function go(r){ if(!NAV.find(x=>x[0]===r))r='dashboard'; S.route=r; S.drawer=false; setMenu(false); render(); window.scrollTo(0,0); try{ if(location.hash!=='#'+r)history.replaceState(null,'','#'+r);}catch(e){} }
+
+let toastTimer;
+function toast(msg){ document.querySelector('.toast')?.remove(); const t=document.createElement('div'); t.className='toast'; t.setAttribute('role','status'); t.textContent=msg; document.body.appendChild(t); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.remove(),2400); }
+
+function openDrawer(){ lastFocus=document.activeElement; S.drawer=true; renderDrawer(); setTimeout(()=>document.getElementById('drawer-close').focus(),30); }
+function closeDrawer(){ S.drawer=false; renderDrawer(); const b=document.querySelector(`[data-pick="${S.sel}"]`); (b||lastFocus)?.focus?.(); }
+function pick(id){ S.sel=id; if(wide.matches){ render(); document.querySelector(`[data-pick="${id}"]`)?.focus(); } else { render(); openDrawer(); } }
+
+function approve(id){
+  const r=rowById(id); if(!r||r.st!=='待审核'||S.busy)return;
+  S.busy=id; refreshDetail();
+  setTimeout(()=>{
+    r.st='已确认'; r.log.push([now(),'运营审核通过',1]);
+    S.counts.pending=Math.max(0,S.counts.pending-1); S.counts.confirmed++;
+    S.busy=null; render(); toast(`${id} 已审核通过`);
+  },1000);
+}
+function refreshDetail(){
+  const r=rowById(S.sel);
+  const inl=document.getElementById('detail-inline'); if(inl)inl.innerHTML=detailHTML(r);
+  if(drawer.classList.contains('on'))dBody.innerHTML=`<div class="card detail">${detailHTML(r)}</div>`;
+}
+
+/* reject modal */
+const modal=document.getElementById('modal'), rForm=document.getElementById('reject-form'), rText=document.getElementById('reject-reason'), rErr=document.getElementById('reject-err'), rOk=document.getElementById('reject-ok');
+let rejectId=null, modalFocus=null;
+function openReject(id){
+  rejectId=id; modalFocus=document.activeElement; const r=rowById(id);
+  document.getElementById('reject-desc').textContent=`${r.id} · ${r.m} · ${r.svc}。驳回后这笔预约不会扣积分，原因会通知会员。`;
+  rText.value=''; rErr.textContent=''; rText.removeAttribute('aria-invalid'); rOk.disabled=false; rOk.textContent='确认驳回';
+  modal.hidden=false; setTimeout(()=>rText.focus(),20);
+}
+function closeReject(){ modal.hidden=true; rejectId=null; (document.getElementById('btn-reject')||modalFocus)?.focus?.(); }
+rForm.addEventListener('submit',e=>{
+  e.preventDefault(); if(rOk.disabled)return;
+  const v=rText.value.trim();
+  if(!v){ rErr.textContent='请填写驳回原因'; rText.setAttribute('aria-invalid','true'); rText.focus(); return; }
+  rOk.disabled=true; rOk.innerHTML='<span class="spin" aria-hidden="true"></span>处理中';
+  document.getElementById('reject-cancel').disabled=true;
+  setTimeout(()=>{
+    const r=rowById(rejectId);
+    r.st='已驳回'; r.log.push([now(),`运营驳回 · 原因：${v} · 积分未扣除`,1]);
+    S.counts.pending=Math.max(0,S.counts.pending-1); S.counts.cancelled++;
+    document.getElementById('reject-cancel').disabled=false;
+    const id=rejectId; modal.hidden=true; rejectId=null; render(); toast(`${id} 已驳回 · 积分未扣除`);
+  },800);
+});
+rText.addEventListener('input',()=>{ if(rText.value.trim()){rErr.textContent='';rText.removeAttribute('aria-invalid');} });
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const navA=e.target.closest('a[href^="#"]');
+  if(navA){ const k=navA.getAttribute('href').slice(1); if(NAV.find(x=>x[0]===k)){ e.preventDefault(); go(k); return; } }
+  const b=e.target.closest('button');
+  if(b&&b.disabled)return;
+  if(b){
+    const d=b.dataset;
+    if(b.id==='menu-btn'){ setMenu(!mbar.classList.contains('open')); return; }
+    if(b.id==='bell'){ toast('这一页在正式开发时补齐'); return; }
+    if(b.id==='q-clear'){ S.q=''; qInput.value=''; render(); qInput.focus(); return; }
+    if(b.id==='drawer-close'){ closeDrawer(); return; }
+    if(d.filter){ S.filter=d.filter; render(); document.getElementById('f-'+d.filter)?.focus(); return; }
+    if(d.pick){ pick(d.pick); return; }
+    switch(d.act){
+      case 'toast': toast(d.msg); return;
+      case 'approve': approve(d.id); return;
+      case 'reject': openReject(d.id); return;
+      case 'modal-cancel': if(!document.getElementById('reject-cancel').disabled)closeReject(); return;
+      case 'clear-search': S.q=''; qInput.value=''; render(); qInput.focus(); return;
+    }
+  }
+  if(e.target.closest('[data-act="modal-cancel"]')){ if(!document.getElementById('reject-cancel').disabled)closeReject(); return; }
+  const tr=e.target.closest('tr[data-row]'); if(tr){ pick(tr.dataset.row); return; }
+  if(e.target===scrim){ closeDrawer(); }
+});
+qInput.addEventListener('input',()=>{
+  S.q=qInput.value;
+  if(S.route==='bookings'){ render(); } else qForm.classList.toggle('has',!!S.q);
+});
+qForm.addEventListener('submit',e=>{ e.preventDefault(); S.q=qInput.value; if(S.route!=='bookings')go('bookings'); else render(); });
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  if(!modal.hidden){ if(!document.getElementById('reject-cancel').disabled)closeReject(); return; }
+  if(drawer.classList.contains('on')){ closeDrawer(); return; }
+  if(mbar.classList.contains('open')){ setMenu(false); menuBtn.focus(); }
+});
+/* keep Tab inside open drawer / modal */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Tab')return;
+  const root=!modal.hidden?rForm:drawer.classList.contains('on')?drawer:null; if(!root)return;
+  const f=[...root.querySelectorAll('button:not([disabled]),textarea,[href],input')]; if(!f.length)return;
+  const first=f[0], last=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
+const onWide=()=>{ if(wide.matches)S.drawer=false; render(); };
+if(wide.addEventListener)wide.addEventListener('change',onWide); else if(wide.addListener)wide.addListener(onWide);
+window.addEventListener('hashchange',()=>{ const k=location.hash.slice(1); if(k&&k!==S.route)go(k); });
+
+const start=(location.hash||'').slice(1);
+S.route=NAV.find(x=>x[0]===start)?start:'dashboard';
+render();
+})();
+</script>
+
+</body>
+</html>

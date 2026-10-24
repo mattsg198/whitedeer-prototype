@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>白鹿俱乐部 新版原型</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@600&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#13061A;--card:#230D30;--line:#4A2A52;--ink:#F5EEE2;--muted:#BFA9C4;--gold:#C9A86F;--pale:#E8D9B8}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC",system-ui,sans-serif;padding-block:56px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+main{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
+header img{height:44px}
+.eyebrow{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:24px;color:var(--gold);margin-top:28px}
+h1{margin:4px 0 0;font-family:"Noto Serif SC","Songti SC",serif;font-size:32px;font-weight:600;text-wrap:balance}
+p{margin:12px 0 0;color:var(--muted);line-height:1.75;max-width:62ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+a.card{display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:18px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:border-color .2s}
+a.card:hover{border-color:var(--gold)}
+a.card:focus-visible{outline:2px solid var(--pale);outline-offset:2px}
+.card .tag{font-size:12px;letter-spacing:.08em;color:var(--gold)}
+.card h2{margin:0;font-family:"Noto Serif SC","Songti SC",serif;font-size:20px;font-weight:600}
+.card span.d{font-size:14px;line-height:1.7;color:var(--muted)}
+.card .go{margin-top:auto;padding-top:8px;font-size:14px;color:var(--pale)}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:18px}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="img/logo-light.png" alt="白鹿俱乐部">
+    <div class="eyebrow">Leap Beyond</div>
+    <h1>新版界面 · 可点击高保真原型</h1>
+    <p>按新版视觉方案做的三端原型，可以直接点着用。会员端和管家端用手机打开就是全屏；管理后台建议用电脑打开。页面里的会员、价格和预约都是演示数据，不连真实系统。</p>
+  </header>
+  <div class="grid">
+    <a class="card" href="member/"><span class="tag">会员端 · H5</span><h2>会员端</h2><span class="d">首页、臻选、服务预约、确认支付、行程、管家对话、会籍与积分。可以走完一次酒店预订。</span><span class="go">打开 →</span></a>
+    <a class="card" href="concierge/"><span class="tag">管家端 · App</span><h2>管家端</h2><span class="d">工作台审核预约、改价备注，会员档案里记录消费、调整积分，和会员沟通。</span><span class="go">打开 →</span></a>
+    <a class="card" href="admin/"><span class="tag">管理后台 · Web</span><h2>管理后台</h2><span class="d">运营看板和预约管理：按状态筛选、搜索，查看详情，审核通过或驳回。</span><span class="go">打开 →</span></a>
+  </div>
+  <footer>白鹿俱乐部 · 新版原型 · 2026 年 10 月</footer>
+</main>
+</body>
+</html>

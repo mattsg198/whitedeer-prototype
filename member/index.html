@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>白鹿会员端 H5 原型</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap">
+<style>
+/* 白鹿俱乐部 设计规范 · 语义色（来自规范库 tokens.json）。light = 象牙（默认），dark = 夜紫。 */
+:root{
+  --surface:#F7F3EC; --surface-raised:#FFFFFF; --surface-sunken:#EFE8DD; --surface-inverse:#230D30; --surface-inverse-2:#13061A;
+  --border:#E6DED2; --border-strong:#8F8494;
+  --ink:#1E1622; --ink-muted:#6E6373; --ink-disabled:#A79DA9; --ink-inverse:#F5EEE2; --ink-inverse-muted:#BFA9C4;
+  --primary:#230D30; --primary-hover:#3D1A40; --on-primary:#E8D9B8;
+  --accent:#C9A86F; --accent-text:#8A6A35; --focus-ring:#8A6A35;
+  --tag-bg:#F3EBDD; --tag-text:#6B5128;
+  --success:#2F6B4F; --success-bg:#E4F0E9; --warning:#9A5B12; --warning-bg:#F7EBDA;
+  --danger:#9E3434; --danger-bg:#F6E3E3; --info:#2D5A8A; --info-bg:#E3ECF6;
+  --neutral-tag-bg:#EEE6F0; --neutral-tag:#3D1A40;
+  --plum-50:#F6F0F7; --plum-600:#5A2D5E; --neutral-400:#CFC6D0; --avatar-bg:#E8D9B8; --avatar-ink:#230D30;
+  --tier-platinum:#3D1A40; --tier-foil:#C9A86F; --tier-ink:#F5EEE2; --inverse-track:#3A2442; --inverse-line:#4A2A52; --inverse-tile:#2E1838;
+  --data-1:#3D1A40; --data-2:#C9A86F; --data-3:#2D5A8A; --data-4:#8E6695; --data-5:#B08F55;
+  --scrim:rgba(19,6,26,.55);
+  --shadow-2:0 8px 24px rgba(35,13,48,0.10); --shadow-3:0 16px 48px rgba(35,13,48,0.18);
+  --serif:"Noto Serif SC","Songti SC",serif;
+  --sans:"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+  --display:"Cormorant Garamond","Noto Serif SC",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --surface:#13061A; --surface-raised:#230D30; --surface-sunken:#0C0412; --surface-inverse:#2A1236; --surface-inverse-2:#0C0412;
+  --border:#3A2442; --border-strong:#85698C;
+  --ink:#F5EEE2; --ink-muted:#BFA9C4; --ink-disabled:#6B5A70; --ink-inverse:#F5EEE2; --ink-inverse-muted:#BFA9C4;
+  --primary:#C9A86F; --primary-hover:#D9C092; --on-primary:#13061A;
+  --accent:#C9A86F; --accent-text:#C9A86F; --focus-ring:#E8D9B8;
+  --tag-bg:#3A2A18; --tag-text:#E8D9B8;
+  --success:#8FC2A4; --success-bg:#1B2A22; --warning:#E3B877; --warning-bg:#33240F;
+  --danger:#E8A8A8; --danger-bg:#3A1A1C; --info:#9DB9DE; --info-bg:#16233A;
+  --neutral-tag-bg:#3A2442; --neutral-tag:#E8D9B8;
+  --plum-50:#2E1838; --plum-600:#B391B9; --neutral-400:#6B5A70; --avatar-bg:#3A2A18; --avatar-ink:#E8D9B8;
+  --inverse-track:#3A2442; --inverse-line:#4A2A52; --inverse-tile:#3A1F46;
+  --data-1:#B391B9; --data-2:#C9A86F; --data-3:#9DB9DE; --data-4:#D3BAD7; --data-5:#E3B877;
+  --shadow-2:0 8px 24px rgba(0,0,0,0.50); --shadow-3:0 16px 48px rgba(0,0,0,0.60);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --surface:#13061A; --surface-raised:#230D30; --surface-sunken:#0C0412; --surface-inverse:#2A1236; --surface-inverse-2:#0C0412;
+  --border:#3A2442; --border-strong:#85698C;
+  --ink:#F5EEE2; --ink-muted:#BFA9C4; --ink-disabled:#6B5A70; --ink-inverse:#F5EEE2; --ink-inverse-muted:#BFA9C4;
+  --primary:#C9A86F; --primary-hover:#D9C092; --on-primary:#13061A;
+  --accent:#C9A86F; --accent-text:#C9A86F; --focus-ring:#E8D9B8;
+  --tag-bg:#3A2A18; --tag-text:#E8D9B8;
+  --success:#8FC2A4; --success-bg:#1B2A22; --warning:#E3B877; --warning-bg:#33240F;
+  --danger:#E8A8A8; --danger-bg:#3A1A1C; --info:#9DB9DE; --info-bg:#16233A;
+  --neutral-tag-bg:#3A2442; --neutral-tag:#E8D9B8;
+  --plum-50:#2E1838; --plum-600:#B391B9; --neutral-400:#6B5A70; --avatar-bg:#3A2A18; --avatar-ink:#E8D9B8;
+  --inverse-track:#3A2442; --inverse-line:#4A2A52; --inverse-tile:#3A1F46;
+  --data-1:#B391B9; --data-2:#C9A86F; --data-3:#9DB9DE; --data-4:#D3BAD7; --data-5:#E3B877;
+  --shadow-2:0 8px 24px rgba(0,0,0,0.50); --shadow-3:0 16px 48px rgba(0,0,0,0.60);
+  color-scheme:dark;
+}
+
+/* Layout: desktop = review stage (notes left on night plum, 390×844 phone right); ≤820px = the app fills the screen. */
+:root{ --stage:#13061A; --stage-ink:#E8D9B8; --stage-muted:#BFA9C4; --stage-hover:#2A1335; --stage-on:#3D1A40; }
+html,body{height:100%}
+body{background:var(--stage);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- review stage ---------- */
+.stage{min-height:100%;display:flex;align-items:center;justify-content:center;gap:64px;padding-block:40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:border-box}
+.notes{width:300px;color:var(--stage-ink);display:flex;flex-direction:column;gap:20px}
+.notes img{height:44px;align-self:flex-start}
+.notes .eyebrow{font-family:var(--display);font-style:italic;font-size:22px;color:#C9A86F}
+.notes h1{margin:0;font-family:var(--serif);font-size:26px;line-height:1.35;color:#F5EEE2;text-wrap:balance}
+.notes p{margin:0;font-size:13.5px;line-height:1.75;color:var(--stage-muted)}
+.jump{display:flex;flex-direction:column;gap:2px}
+.jump .grp{font-size:12px;letter-spacing:.12em;color:var(--stage-muted);margin:10px 0 4px}
+.jump button{all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:8px;font-size:14px;color:var(--stage-ink)}
+.jump button:hover{background:var(--stage-hover)}
+.jump button:focus-visible{outline:2px solid #E8D9B8}
+.jump button[aria-current="true"]{background:var(--stage-on);color:#F5EEE2}
+.jump .tagx{font-size:12px;color:var(--stage-muted)}
+.themes{display:flex;gap:6px}
+.themes button{all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:16px;border:1px solid #4A2A52;font-size:12.5px;color:var(--stage-ink)}
+.themes button[aria-pressed="true"]{background:#C9A86F;border-color:#C9A86F;color:#13061A}
+.themes button:focus-visible{outline:2px solid #E8D9B8;outline-offset:2px}
+.phone{position:relative;width:390px;height:844px;flex:none;border-radius:46px;background:var(--surface);overflow:hidden;box-shadow:0 0 0 10px #0A0310,0 0 0 11px #3A2442,0 40px 80px rgba(0,0,0,.5)}
+@media (max-width:820px){
+  .stage{padding:0;display:block;height:100%}
+  .notes{display:none}
+  .phone{width:100%;height:100%;border-radius:0;box-shadow:none}
+}
+
+/* ---------- app shell ---------- */
+.app{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface)}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.tabbar{flex:none;display:flex;background:var(--surface-raised);border-top:1px solid var(--border);padding-bottom:max(14px,env(safe-area-inset-bottom,0px))}
+.tabbar button{all:unset;cursor:pointer;flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 4px;font-size:12px;color:var(--ink-muted);position:relative}
+.tabbar button[aria-current="true"]{color:var(--accent-text)}
+.tabbar .dot{position:absolute;top:8px;left:calc(50% + 8px);width:8px;height:8px;border-radius:4px;background:var(--danger)}
+.bottombar{flex:none;background:var(--surface-raised);border-top:1px solid var(--border);padding:12px 20px max(18px,env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:72px}
+
+/* ---------- shared ---------- */
+.btn{height:52px;padding:0 30px;border:0;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:16px;font-weight:500;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{background:var(--primary-hover)}
+.btn.block{width:100%}
+.btn.ghost{background:transparent;border:1px solid var(--accent);color:var(--accent-text)}
+.btn:disabled{background:var(--surface-sunken);color:var(--ink-disabled);cursor:not-allowed}
+.btn .spin{width:18px;height:18px;border-width:2px}
+.pill{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap;background:var(--tag-bg);color:var(--tag-text)}
+.pill.ok{background:var(--success-bg);color:var(--success)} .pill.warn{background:var(--warning-bg);color:var(--warning)} .pill.bad{background:var(--danger-bg);color:var(--danger)} .pill.done{background:var(--neutral-tag-bg);color:var(--neutral-tag)}
+.topbar{display:flex;align-items:center;gap:6px;padding:14px 12px 10px;background:var(--surface);position:sticky;top:0;z-index:5}
+.topbar h1{margin:0;font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
+.iconbtn{width:44px;height:44px;border:0;background:transparent;border-radius:22px;display:flex;align-items:center;justify-content:center;flex:none;color:var(--ink)}
+.iconbtn.glass{background:var(--scrim);color:#FFFFFF;width:40px;height:40px;border-radius:20px}
+.h2row{display:flex;justify-content:space-between;align-items:baseline;padding:18px 20px 0}
+.h2row h2{margin:0;font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
+.link{all:unset;cursor:pointer;font-size:13px;color:var(--accent-text)}
+.card{background:var(--surface-raised);border:1px solid var(--border);border-radius:14px;color:var(--ink)}
+.muted{color:var(--ink-muted)}
+.ph{display:flex;align-items:center;justify-content:center;background:var(--tier-platinum)}
+.ph img{width:auto!important;height:42%!important;object-fit:contain!important}
+.note{display:flex;align-items:flex-start;gap:6px;font-size:13px;line-height:1.6;color:var(--ink-muted)}
+.note svg{flex:none;margin-top:2px}
+.note.warn{color:var(--warning)}
+.rows>*{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--border);font-size:15px;color:var(--ink);width:100%}
+.rows .grow{flex:1}
+.spin{width:36px;height:36px;border-radius:50%;border:3px solid var(--tag-bg);border-top-color:var(--accent);animation:sp .9s linear infinite;box-sizing:border-box}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* inverse bands (header, member card) */
+.band{background:var(--surface-inverse);color:var(--ink-inverse)}
+.band .sub{font-size:13px;color:var(--ink-inverse-muted)}
+.tiercard{border-radius:18px;background:var(--tier-platinum);border:1px solid var(--tier-foil);color:var(--tier-ink)}
+.tiercard .script{font-family:var(--display);font-style:italic;color:var(--tier-foil)}
+.tiercard small{font-size:12px;color:#BFA9C4}
+.track{height:4px;border-radius:2px;background:var(--inverse-track)}
+.track i{display:block;height:4px;border-radius:2px;background:var(--accent)}
+
+/* home */
+.hero{padding:22px 20px 92px}
+.hero .bar{display:flex;justify-content:space-between;align-items:center}
+.hero .bar img{height:30px}
+.hero h1{margin:4px 0 0;font-family:var(--serif);font-size:26px;font-weight:600;color:var(--ink-inverse)}
+.member{box-sizing:border-box;cursor:pointer;display:block;font:inherit;text-align:left;margin:-72px 16px 0;width:calc(100% - 32px);position:relative;padding:20px 20px 18px}
+.member .big{font-family:var(--display);font-size:28px;font-weight:600;color:var(--tier-ink);line-height:1.15}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);padding:22px 12px 6px}
+.quick button{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;color:var(--ink)}
+.quick .ring{width:52px;height:52px;border-radius:26px;background:var(--surface-raised);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--primary-hover)}
+.rail{display:flex;gap:12px;padding:14px 20px 24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:20px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail .card{flex:0 0 250px;overflow:hidden;scroll-snap-align:start;text-align:left;padding:0;font:inherit}
+.rail .media{display:block;width:250px;height:150px;object-fit:cover}
+.meta{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px}
+.over{font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--accent-text)}
+.meta .nm{font-family:var(--serif);font-size:16px;font-weight:600}
+.meta .pr{font-size:13px;color:var(--ink-muted)}
+.meta .pr b{color:var(--ink);font-weight:600}
+
+/* explore */
+.chips{display:flex;gap:8px;padding:4px 20px 6px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;height:36px;padding:0 16px;border-radius:999px;border:1px solid var(--border-strong);background:var(--surface-raised);font-size:14px;color:var(--ink)}
+.chips button[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.vlist{display:flex;flex-direction:column;gap:12px;padding:12px 16px 24px}
+.vlist .card{overflow:hidden;padding:0;text-align:left;font:inherit}
+.vlist .media{display:block;width:100%;aspect-ratio:5/3;height:auto;object-fit:cover;max-width:100%}
+
+/* detail */
+.cover{position:relative;height:300px;flex:none}
+.cover .media{display:block;width:100%;height:300px;object-fit:cover}
+.cover .ctl{position:absolute;left:16px;right:16px;top:16px;display:flex;justify-content:space-between}
+.sheet{margin-top:-22px;position:relative;background:var(--surface);border-radius:22px 22px 0 0;padding:22px 20px 24px}
+.sheet h1{margin:10px 0 0;font-family:var(--serif);font-size:24px;line-height:32px;font-weight:600;color:var(--ink);text-wrap:balance}
+.days{margin-top:12px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.days button{height:72px;border-radius:14px;background:var(--surface-raised);color:var(--ink);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0}
+.days button span,.days button em{font-size:12px;opacity:.85;font-style:normal}
+.days button b{font-size:18px;font-weight:600}
+.days button.in{background:var(--tag-bg);border-color:var(--accent);color:var(--tag-text)}
+.days button.sel{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.days button.full{background:var(--surface-sunken);color:var(--ink-disabled);border-color:var(--surface-sunken)}
+.days button:disabled{cursor:not-allowed}
+.stay{margin-top:18px;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:12px}
+.ctrl{display:flex;align-items:center;gap:12px}
+.ctrl button{width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;padding:0;color:var(--ink)}
+.ctrl button i{width:32px;height:32px;border-radius:16px;border:1px solid var(--border-strong);background:var(--surface-raised);display:flex;align-items:center;justify-content:center}
+.ctrl button.add i{border-color:var(--accent);color:var(--accent-text)}
+.ctrl button:disabled{opacity:.4;cursor:not-allowed}
+.ctrl b{min-width:12px;text-align:center}
+.price b{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink)}
+.price s{font-size:12px;color:var(--ink-disabled)}
+
+/* checkout */
+.sum{padding:6px 16px;font-size:14px}
+.sum>div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.sum>div:last-child{border-bottom:0}
+.method{display:flex;align-items:center;gap:12px;padding:15px 16px;background:var(--surface-raised);border:1px solid var(--border);border-radius:14px;cursor:pointer;color:var(--ink)}
+.method:has(input:checked){border-color:var(--primary)}
+.method .ic{display:flex;color:var(--primary-hover)}
+.method input{appearance:none;width:20px;height:20px;border-radius:10px;border:2px solid var(--border-strong);margin:0;display:grid;place-items:center;flex:none}
+.method input:checked{border-color:var(--primary)}
+.method input:checked::after{content:"";width:10px;height:10px;border-radius:5px;background:var(--primary)}
+.method:has(input:disabled){opacity:.55;cursor:not-allowed}
+
+/* done */
+.done{min-height:100%;display:flex;flex-direction:column;align-items:center;padding:70px 24px 30px;text-align:center;gap:14px;box-sizing:border-box}
+.done .seal{width:84px;height:84px;border-radius:42px;background:var(--surface-inverse);color:var(--accent);display:flex;align-items:center;justify-content:center}
+.done h1{margin:6px 0 0;font-family:var(--serif);font-size:24px;color:var(--ink)}
+
+/* trips */
+.seg{display:grid;grid-template-columns:1fr 1fr;margin:4px 16px 0;background:var(--surface-sunken);border-radius:999px;padding:4px}
+.seg button{all:unset;cursor:pointer;text-align:center;height:36px;line-height:36px;border-radius:999px;font-size:14px;color:var(--ink-muted)}
+.seg button[aria-pressed="true"]{background:var(--surface-raised);color:var(--ink);font-weight:500}
+.trip{display:flex;gap:12px;padding:12px}
+.trip .thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;flex:none;overflow:hidden}
+.trip .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.trip .t{font-family:var(--serif);font-weight:600;font-size:15px}
+.empty{display:flex;flex-direction:column;align-items:center;gap:10px;padding:56px 24px;text-align:center}
+.empty .mk{width:64px;height:64px;border-radius:32px;background:var(--tier-platinum);display:flex;align-items:center;justify-content:center}
+.empty .mk img{height:30px}
+
+/* concierge */
+.agent{display:flex;align-items:center;gap:12px;padding:14px 20px}
+.avatar{width:44px;height:44px;border-radius:22px;background:var(--avatar-bg);color:var(--avatar-ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:18px;flex:none}
+.thread{display:flex;flex-direction:column;gap:10px;padding:16px 16px 10px}
+.bubble{max-width:78%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.6;white-space:pre-wrap}
+.bubble.g{align-self:flex-start;background:var(--surface-raised);border:1px solid var(--border);border-bottom-left-radius:4px}
+.bubble.me{align-self:flex-end;background:var(--primary);color:var(--on-primary);border-bottom-right-radius:4px}
+.stamp{align-self:center;font-size:12px;color:var(--ink-muted)}
+.typing{align-self:flex-start;font-size:13px;color:var(--ink-muted)}
+.composer{flex:none;background:var(--surface-raised);border-top:1px solid var(--border);padding:10px 12px 10px}
+.composer form{display:flex;gap:8px;align-items:center}
+.composer input{flex:1;min-width:0;height:44px;border-radius:999px;border:1px solid var(--border-strong);background:var(--surface);padding:0 16px;font:inherit;font-size:16px;color:var(--ink)}
+.composer .send{width:44px;height:44px;border-radius:22px;border:0;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;justify-content:center;flex:none}
+.composer .chips{padding:0 0 10px}
+.composer .chips button{height:32px;font-size:13px}
+
+/* me */
+.mhead{padding:24px 20px 26px;background:var(--surface-inverse-2)}
+.mcard{margin-top:20px;padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid2 .card{padding:14px;display:flex;flex-direction:column;gap:8px}
+.grid2 .card svg{color:var(--primary-hover)}
+
+/* overlays */
+.scrim{position:absolute;inset:0;background:var(--scrim);display:flex;align-items:flex-end;z-index:20}
+.panel{width:100%;background:var(--surface);border-radius:22px 22px 0 0;padding:26px 24px max(30px,env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;box-shadow:var(--shadow-3)}
+.panel h2{margin:0;font-family:var(--serif);font-size:20px;color:var(--ink)}
+.toast{position:absolute;left:50%;bottom:110px;transform:translateX(-50%);background:var(--ink);color:var(--surface);font-size:13px;padding:10px 16px;border-radius:999px;z-index:30;max-width:80%;text-align:center;box-shadow:var(--shadow-2)}
+@media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+</style>
+</head>
+<body>
+
+
+<div class="stage">
+  <aside class="notes">
+    <img src="../img/logo-light.png" alt="白鹿俱乐部">
+    <div>
+      <div class="eyebrow">Leap Beyond</div>
+      <h1>会员端 H5 高保真原型</h1>
+    </div>
+    <p>按新版效果图和设计规范做的可点击原型，手机打开就是全屏。可以从“本季臻选”选一间酒店，走一遍选日期、提交、管家确认、支付的完整流程，行程和积分会跟着变。</p>
+    <p>会员、价格和行程都是演示数据，不连真实系统。酒店以外的服务走“请管家安排”，本次不做供应商直连预订。</p>
+    <div class="themes" role="group" aria-label="主题"><button data-th="light">象牙</button><button data-th="dark">夜紫</button><button data-th="">跟随系统</button></div>
+    <nav class="jump" id="jump" aria-label="页面跳转"></nav>
+  </aside>
+  <div class="phone"><div class="app" id="app"></div></div>
+</div>
+
+<script>
+(function(){
+const IMG={kyoto:'../img/kyoto.jpg',tokyo:'../img/tokyo.jpg'};
+const P={
+  plane:'<path d="M2 16l20-6-20-6 3 6-3 6z"/><path d="M5 10h8"/>',
+  bed:'<path d="M3 18V7"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/>',
+  bank:'<path d="M4 20h16"/><path d="M6 20V10"/><path d="M10 20V10"/><path d="M14 20V10"/><path d="M18 20V10"/><path d="M3 10l9-6 9 6"/>',
+  car:'<path d="M5 16l1.5-5h11L19 16"/><rect x="3" y="16" width="18" height="4" rx="1"/><circle cx="7.5" cy="18" r="0.6"/><circle cx="16.5" cy="18" r="0.6"/>',
+  butler:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/><path d="M10.5 14.8l1.5 2 1.5-2"/>',
+  gift:'<rect x="4" y="9" width="16" height="11" rx="1"/><path d="M3 9h18"/><path d="M12 9v11"/><path d="M12 9c-2-4-6-4-6-1.5S10 9 12 9z"/><path d="M12 9c2-4 6-4 6-1.5S14 9 12 9z"/>',
+  shield:'<path d="M12 3l7 3v6c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
+  search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  home:'<path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/>',
+  grid:'<rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/>',
+  cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/><path d="M9 3v4"/><path d="M15 3v4"/>',
+  chat:'<path d="M5 18l-1 3 3.5-1.5A8 8 0 1 0 5 18z"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
+  back:'<path d="M15 5l-7 7 7 7"/>',
+  heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+  share:'<circle cx="6" cy="12" r="2.2"/><circle cx="17" cy="6" r="2.2"/><circle cx="17" cy="18" r="2.2"/><path d="M8 11l7-4"/><path d="M8 13l7 4"/>',
+  pin:'<path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>',
+  minus:'<path d="M6 12h12"/>',plus:'<path d="M12 6v12"/><path d="M6 12h12"/>',
+  coin:'<circle cx="12" cy="12" r="8"/><path d="M9.5 9.5h3.5a1.8 1.8 0 0 1 0 3.5h-3a1.8 1.8 0 0 0 0 3.5H14"/><path d="M12 7v2"/><path d="M12 17v-1"/>',
+  qr:'<rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2h-2z"/><path d="M18 18h2v2h-2z"/><path d="M14 18h2"/>',
+  card:'<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/>',
+  doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6"/><path d="M9 16h6"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="M2 12h3"/><path d="M19 12h3"/><path d="M4.9 4.9l2.1 2.1"/><path d="M17 17l2.1 2.1"/><path d="M4.9 19.1L7 17"/><path d="M17 7l2.1-2.1"/>',
+  right:'<path d="M9 6l6 6-6 6"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  alert:'<circle cx="12" cy="12" r="8"/><path d="M12 8v5"/><path d="M12 16v.5"/>',
+  send:'<path d="M4 12l16-8-6 16-2.5-6.5z"/><path d="M11.5 13.5L20 4"/>'
+};
+const ic=(n,s=22)=>`<svg aria-hidden="true" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
+const fmt=n=>n.toLocaleString('en-US');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const ITEMS=[
+  {id:'kyoto',cat:'住宿',loc:'京都 · 住宿',name:'四季酒店 · 池泉庭园套房',short:'四季酒店 · 池泉庭园',addr:'京都东山区 · 积翠园旁',img:'kyoto',price:2860,unit:'晚',book:true,full:[27],left:{25:'余 2 间'},tag:'钻石会员免费升房'},
+  {id:'tokyo',cat:'住宿',loc:'东京 · 住宿',name:'安缦东京 · 豪华客房',short:'安缦东京',addr:'东京千代田区大手町',img:'tokyo',price:3480,unit:'晚',book:true,full:[26],left:{24:'余 1 间'},tag:'含双人早餐'},
+  {id:'car',cat:'豪车',loc:'新加坡 · 豪车礼宾',name:'劳斯莱斯幻影 · 机场接送',short:'劳斯莱斯接送',addr:'樟宜机场 ⇄ 市区任意地址',price:680,unit:'程',book:false,tag:'含举牌接机'},
+  {id:'jet',cat:'出行',loc:'尊享出行',name:'私人飞机 · 单程包机',short:'私人飞机包机',addr:'新加坡实里达机场出发',price:null,book:false,tag:'管家询价'},
+  {id:'fo',cat:'家办',loc:'财富家办',name:'家族办公室 · 首次面谈',short:'家办首次面谈',addr:'会员会客室',price:0,book:false,tag:'会员免费'}
+];
+const byId=id=>ITEMS.find(i=>i.id===id);
+const WD=['周日','周一','周二','周三','周四','周五','周六'];
+const DAYS=[24,25,26,27,28];
+const dl=d=>d>31?`11月${d-31}日`:`10月${d}日`;
+const wk=d=>WD[new Date(2026,9,d).getDay()];
+
+const S={
+  route:'home',stack:[],points:128600,cat:'全部',tripTab:'up',pay:'points',fav:{},
+  sel:{id:'kyoto',ci:25,co:27,guests:2},
+  overlay:null,typing:false,unread:true,paying:false,
+  trips:[
+    {id:'t1',title:'安缦东京 · 豪华客房',sub:'11月8日–10日 · 2 晚 · 2 位',img:'tokyo',status:['ok','已确认'],up:true},
+    {id:'t2',title:'劳斯莱斯幻影 · 接机',sub:'11月8日 · 羽田机场',status:['ok','已确认'],up:true},
+    {id:'t3',title:'私人飞机 · 新加坡 → 巴厘岛',sub:'12月20日 · 4 位 · 等待报价',status:['warn','报价中'],up:true},
+    {id:'t4',title:'四季酒店 · 池泉庭园套房',sub:'2026年4月3日–5日 · 2 晚',img:'kyoto',status:['done','已完成'],up:false},
+    {id:'t5',title:'家族办公室 · 首次面谈',sub:'2026年8月12日',status:['done','已完成'],up:false}
+  ],
+  ledger:[
+    {t:'安缦东京 · 2 晚',d:'10月18日',v:-6264},
+    {t:'季度会籍积分',d:'10月1日',v:20000},
+    {t:'劳斯莱斯接机',d:'9月26日',v:-680},
+    {t:'推荐新会员奖励',d:'9月10日',v:5000},
+    {t:'米其林晚宴 · 2 位',d:'8月30日',v:-1960}
+  ],
+  chat:[
+    {k:'stamp',text:'今天 09:12'},
+    {k:'g',text:'陈先生早上好，安缦东京 11 月 8 日的入住已经确认。'},
+    {k:'g',text:'接机司机会在羽田机场到达口举牌等您。当晚要不要我顺便订餐厅？'}
+  ]
+};
+
+function quote(){
+  const it=byId(S.sel.id),n=S.sel.co?S.sel.co-S.sel.ci:0,rooms=Math.ceil(S.sel.guests/2);
+  const base=(it.price||0)*n*rooms,off=Math.round(base*.1);
+  let clash=null;for(let d=S.sel.ci;d<S.sel.ci+n;d++)if((it.full||[]).includes(d))clash=d;
+  return{it,n,rooms,base,off,total:base-off,clash};
+}
+
+const V={};
+const back=g=>`<button class="iconbtn${g?' glass':''}" data-act="back" aria-label="返回">${ic('back',g?20:22)}</button>`;
+const media=(it,cls='media')=>it.img?`<img class="${cls}" src="${IMG[it.img]}" alt="${esc(it.name)}">`:`<div class="${cls} ph" role="img" aria-label="${esc(it.name)}"><img src="../img/mark-gold.png" alt=""></div>`;
+const priceLine=it=>it.price===null?'按行程询价':it.price===0?'会员免费':`会员价 <b class="num">${fmt(it.price)}</b> 积分/${it.unit}起`;
+const up=()=>S.trips.filter(t=>t.up);
+
+V.home=()=>`
+  <div class="band hero">
+    <div class="bar"><img src="../img/logo-light.png" alt="白鹿俱乐部">
+      <div style="display:flex;color:var(--on-primary)">
+        <button class="iconbtn" style="color:#E8D9B8" data-go="explore" aria-label="搜索">${ic('search')}</button>
+        <button class="iconbtn" style="color:#E8D9B8" data-act="toast" data-msg="Grace：安缦东京 11 月 8 日入住已确认" aria-label="通知">${ic('bell')}</button>
+      </div></div>
+    <div class="sub" style="margin-top:22px">晚上好</div>
+    <h1>陈先生，欢迎回来</h1>
+  </div>
+  <button class="member tiercard" data-go="me" aria-label="白金会员卡，查看会籍">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div><div class="script" style="font-size:22px">Platinum</div><small>白金会员 · No. 0088</small></div>
+      <img src="../img/mark-gold.png" alt="" style="height:34px;opacity:.9">
+    </div>
+    <div style="display:flex;gap:28px;margin-top:20px">
+      <div><div class="big num">${fmt(S.points)}</div><small>可用积分</small></div>
+      <div><div class="big num">${up().length}</div><small>待出行</small></div>
+    </div>
+    <div class="track" style="margin-top:16px"><i style="width:72%"></i></div>
+    <div style="margin-top:8px"><small>再消费 21,400 积分升级为钻石会员</small></div>
+  </button>
+  <div class="quick">
+    <button data-cat="出行"><span class="ring">${ic('plane')}</span>尊享出行</button>
+    <button data-cat="住宿"><span class="ring">${ic('bed')}</span>奢华住宿</button>
+    <button data-cat="家办"><span class="ring">${ic('bank')}</span>财富家办</button>
+    <button data-cat="豪车"><span class="ring">${ic('car')}</span>豪车礼宾</button>
+  </div>
+  <div class="h2row"><h2>本季臻选</h2><button class="link" data-cat="全部">全部</button></div>
+  <div class="rail">${ITEMS.slice(0,4).map(it=>`
+    <button class="card" data-open="${it.id}">${media(it)}
+      <div class="meta"><div class="over">${it.loc}</div><div class="nm">${esc(it.short)}</div><div class="pr">${priceLine(it)}</div></div>
+    </button>`).join('')}</div>`;
+
+V.explore=()=>{
+  const cats=['全部','住宿','出行','豪车','家办'],list=ITEMS.filter(i=>S.cat==='全部'||i.cat===S.cat);
+  return `<div class="topbar" style="padding-left:20px"><h1>臻选</h1></div>
+  <div class="chips" role="group" aria-label="分类">${cats.map(c=>`<button data-setcat="${c}" aria-pressed="${S.cat===c}">${c}</button>`).join('')}</div>
+  <div class="vlist">${list.length?list.map(it=>`
+    <button class="card" data-open="${it.id}">${media(it)}
+      <div class="meta"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="over">${it.loc}</span><span class="pill">${it.tag}</span></div>
+      <div class="nm">${esc(it.name)}</div><div class="pr">${priceLine(it)}</div></div>
+    </button>`).join(''):emptyView('这个分类暂时没有服务','可以先和管家说您的需求')}</div>`;
+};
+const emptyView=(t,s)=>`<div class="empty"><div class="mk"><img src="../img/mark-gold.png" alt=""></div><div style="font-size:15px;font-weight:500">${t}</div><div class="muted" style="font-size:13px">${s}</div></div>`;
+
+V.detail=()=>{
+  const it=byId(S.sel.id),fav=S.fav[it.id];let body='';
+  if(it.book){
+    const q=quote(),ci=S.sel.ci,co=S.sel.co;
+    body=`
+    <div style="margin-top:22px;display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0;font-size:15px;font-weight:600">选择入住日期</h2><span style="font-size:12px;color:var(--accent-text)">2026 年 10 月</span></div>
+    <div class="days">${DAYS.map(d=>{
+      const full=(it.full||[]).includes(d);
+      const isSel=d===ci||d===co, inside=co&&d>ci&&d<co;
+      const canCheckout=!co&&d>ci&&!(it.full||[]).some(f=>f>=ci&&f<d);
+      const dis=full&&!canCheckout&&!isSel;
+      const lbl=d===ci?'入住':d===co?'退房':full?'已满':(it.left[d]||'可订');
+      return `<button data-day="${d}" ${dis?'disabled':''} aria-pressed="${isSel}" class="${isSel?'sel':inside?'in':full?'full':''}" aria-label="10月${d}日 ${wk(d)} ${lbl}"><span>${wk(d)}</span><b>${d}</b><em>${lbl}</em></button>`;}).join('')}</div>
+    <div class="card stay">
+      <div><div style="font-size:15px;font-weight:500">${co?`入住 ${q.n} 晚 · ${S.sel.guests} 位成人`:`${S.sel.guests} 位成人`}</div><div class="muted" style="font-size:13px;margin-top:2px">${co?`${dl(ci)} 至 ${dl(co)}`:'请再点一次，选择退房日期'}</div></div>
+      <div class="ctrl"><button data-guests="-1" aria-label="减少入住人数" ${S.sel.guests<=1?'disabled':''}><i>${ic('minus',16)}</i></button><b class="num">${S.sel.guests}</b><button class="add" data-guests="1" aria-label="增加入住人数" ${S.sel.guests>=4?'disabled':''}><i>${ic('plus',16)}</i></button></div>
+    </div>
+    <div style="margin-top:12px">${q.clash?`<div class="note warn">${ic('alert',16)}${q.clash} 日已订满，请换入住日期或缩短晚数。</div>`:`<div class="note">${ic('butler',16)}您的专属管家 Grace 将在提交后 30 分钟内确认</div>`}
+    ${S.sel.guests>2?`<div class="note" style="margin-top:6px">${ic('bed',16)}${S.sel.guests} 位需 ${q.rooms} 间房，价格已按 ${q.rooms} 间计算</div>`:''}</div>`;
+  }else{
+    body=`<div class="card" style="margin-top:22px;padding:16px;display:flex;flex-direction:column;gap:8px">
+      <div style="font-size:15px;font-weight:600">由管家为您安排</div>
+      <div class="note">${ic('butler',16)}点“请管家安排”，告诉 Grace 时间和要求，她会回复您方案和价格。</div></div>`;
+  }
+  return `<div class="cover">${media(it)}
+    <div class="ctl">${back(true)}<div style="display:flex;gap:10px">
+      <button class="iconbtn glass" data-act="fav" aria-label="收藏" aria-pressed="${!!fav}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="${fav?'#C9A86F':'none'}" stroke="${fav?'#C9A86F':'currentColor'}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${P.heart}</svg></button>
+      <button class="iconbtn glass" data-act="toast" data-msg="已复制分享链接" aria-label="分享">${ic('share',20)}</button></div></div></div>
+  <div class="sheet">
+    <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">${it.loc}</span><span class="pill">${it.tag}</span></div>
+    <h1>${esc(it.name)}</h1>
+    <div class="note" style="margin-top:6px;align-items:center">${ic('pin',15)}${esc(it.addr)}</div>
+    ${body}
+  </div>`;
+};
+function detailBar(){
+  const it=byId(S.sel.id);
+  if(!it.book)return `<div class="bottombar"><div><div class="muted" style="font-size:12px">${it.price?'会员价':'费用'}</div><div class="price"><b class="num" style="font-size:24px">${it.price===null?'按行程报价':it.price===0?'会员免费':fmt(Math.round(it.price*.9))+' 积分'}</b></div></div><button class="btn" data-act="askConcierge">请管家安排</button></div>`;
+  const q=quote(),ok=S.sel.co&&!q.clash;
+  return `<div class="bottombar"><div><div class="muted" style="font-size:12px">白金会员价 · 已减 9 折</div>
+    <div class="price" style="display:flex;align-items:baseline;gap:6px">${ok?`<b class="num">${fmt(q.total)}</b><span class="muted" style="font-size:12px">积分</span><s class="num">${fmt(q.base)}</s>`:`<b style="font-size:20px">—</b>`}</div></div>
+    <button class="btn" data-act="submit" ${ok?'':'disabled'}>提交预约</button></div>`;
+}
+
+V.checkout=()=>{
+  const q=quote(),it=q.it,enough=S.points>=q.total;
+  if(!enough&&S.pay==='points')S.pay='paynow';
+  const m=(v,icon,t,s,dis)=>`<label class="method" for="pay-${v}"><span class="ic">${ic(icon)}</span><span style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:500">${t}</span><span class="muted" style="font-size:12px">${s}</span></span><input type="radio" name="pay" id="pay-${v}" value="${v}" ${S.pay===v?'checked':''} ${dis?'disabled':''}></label>`;
+  return `<div class="topbar">${back()}<h1>确认支付</h1></div>
+  <div style="padding:4px 16px 24px;display:flex;flex-direction:column;gap:14px">
+    <div class="card" style="display:flex;gap:12px;padding:12px">${media(it,'thumb" style="width:84px;height:84px;border-radius:10px;object-fit:cover;flex:none')}
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;min-width:0"><div style="font-family:var(--serif);font-size:15.5px;font-weight:600">${esc(it.name)}</div>
+      <div class="muted" style="font-size:13px">${dl(S.sel.ci)}–${dl(S.sel.co).replace(/^10月/,'')} · ${q.n} 晚 · ${S.sel.guests} 位</div><span class="pill ok">管家 Grace 已确认</span></div></div>
+    <div class="card sum">
+      <div><span class="muted">原价${q.rooms>1?`（${q.rooms} 间）`:''}</span><span class="num">${fmt(q.base)} 积分</span></div>
+      <div><span class="muted">白金会员 9 折</span><span class="num" style="color:var(--success)">− ${fmt(q.off)} 积分</span></div>
+      <div><span style="font-weight:600">应付</span><span class="num" style="font-weight:600">${fmt(q.total)} 积分 ≈ S$ ${fmt(q.total)}</span></div>
+    </div>
+    <div style="font-size:14px;font-weight:600;margin-top:4px">支付方式</div>
+    <div style="display:flex;flex-direction:column;gap:10px" role="radiogroup" aria-label="支付方式">
+      ${m('points','coin','积分支付',enough?`可用 ${fmt(S.points)} 积分`:`积分不足，可用 ${fmt(S.points)} 积分`,!enough)}
+      ${m('paynow','qr','PayNow','新加坡银行即时转账')}
+      ${m('card','card','信用卡 / Apple Pay','Visa、Mastercard、Amex')}
+    </div>
+    <div class="note" style="align-items:center"><span style="color:var(--success);display:flex">${ic('shield',16)}</span>支付由 Stripe 加密处理，取消可原路退回</div>
+  </div>`;
+};
+function checkoutBar(){const q=quote(),lbl=S.pay==='points'?`${fmt(q.total)} 积分`:`S$ ${fmt(q.total)}`;
+  return `<div class="bottombar"><button class="btn block" data-act="pay" ${S.paying?'disabled aria-busy="true"':''}>${S.paying?'<span class="spin" aria-hidden="true"></span>正在支付':'确认支付 '+lbl}</button></div>`;}
+
+V.done=()=>{const t=S.trips[0];return `<div class="done">
+  <div class="seal">${ic('check',40)}</div>
+  <h1>预订成功</h1>
+  <p class="muted" style="margin:0;font-size:15px;line-height:1.7">${esc(t.title)}<br>${esc(t.sub)}</p>
+  <div class="card" style="width:100%;padding:14px 16px;text-align:left;margin-top:10px;box-sizing:border-box"><div class="note">${ic('butler',16)}入住前 Grace 会把行程单发给您。行程有变化，直接在“管家”里说。</div></div>
+  <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:14px"><button class="btn block" data-go="trips" data-reset="1">查看行程</button><button class="btn ghost block" data-go="home" data-reset="1">返回首页</button></div>
+</div>`;};
+
+V.trips=()=>{
+  const list=S.trips.filter(t=>S.tripTab==='up'?t.up:!t.up);
+  return `<div class="topbar" style="padding-left:20px"><h1>我的行程</h1></div>
+  <div class="seg" role="group" aria-label="行程状态"><button data-tab="up" aria-pressed="${S.tripTab==='up'}">待出行 · ${up().length}</button><button data-tab="past" aria-pressed="${S.tripTab==='past'}">已完成</button></div>
+  <div class="vlist">${list.length?list.map(t=>`<div class="card trip">${t.img?`<img class="thumb" src="${IMG[t.img]}" alt="">`:`<div class="thumb ph"><img src="../img/mark-gold.png" alt=""></div>`}
+    <div class="body"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><div class="t">${esc(t.title)}</div><span class="pill ${t.status[0]}">${t.status[1]}</span></div>
+    <div class="muted" style="font-size:13px">${esc(t.sub)}</div>
+    ${t.up?`<div style="display:flex;gap:16px;margin-top:2px"><button class="link" style="padding:6px 0" data-act="askAbout" data-t="${t.id}">联系管家</button><button class="link" style="padding:6px 0" data-act="toast" data-msg="行程单已发送到您的邮箱">发送行程单</button></div>`:''}</div></div>`).join(''):emptyView('还没有已完成的行程','完成的行程会出现在这里')}</div>`;
+};
+
+V.concierge=()=>`<div class="band agent"><div class="avatar">G</div><div style="flex:1"><div style="font-family:var(--serif);font-size:17px;color:var(--ink-inverse)">Grace · 专属管家</div><div class="sub" style="font-size:12px">24 小时在线</div></div></div>
+  <div class="thread" aria-live="polite">${S.chat.map(m=>m.k==='stamp'?`<div class="stamp">${m.text}</div>`:`<div class="bubble ${m.k}">${esc(m.text)}</div>`).join('')}${S.typing?'<div class="typing">Grace 正在输入…</div>':''}</div>`;
+function composer(){return `<div class="composer"><div class="chips">${['订当晚餐厅','安排接机','改行程日期','开发票'].map(c=>`<button data-quick="${c}">${c}</button>`).join('')}</div>
+  <form id="cform"><label for="cmsg" style="position:absolute;left:-9999px">给管家留言</label><input id="cmsg" autocomplete="off" placeholder="告诉 Grace 您需要什么"><button class="send" aria-label="发送">${ic('send',20)}</button></form></div>`;}
+
+V.me=()=>`<div class="mhead">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h1 style="margin:0;font-family:var(--serif);font-size:20px;color:var(--ink-inverse)">我的会籍</h1><button class="iconbtn" style="color:#E8D9B8" data-act="toast" data-msg="前台扫会员码即可识别您的身份" aria-label="会员码">${ic('qr')}</button></div>
+  <div class="tiercard mcard"><div style="display:flex;justify-content:space-between"><div class="script" style="font-size:30px">Platinum</div><img src="../img/mark-gold.png" alt="" style="height:38px"></div>
+    <div style="margin-top:26px;font-family:var(--display);font-size:18px;letter-spacing:.18em">CHEN · WEIMING</div>
+    <div style="margin-top:4px;display:flex;justify-content:space-between"><small>No. 0088</small><small>有效期至 2027.10</small></div></div>
+  <div style="margin-top:18px;display:flex;justify-content:space-between;font-size:12px;color:var(--ink-inverse-muted)"><span>白金</span><span>钻石</span></div>
+  <div class="track" style="margin-top:6px"><i style="width:72%"></i></div>
+  <div style="margin-top:8px;font-size:12px;color:var(--ink-inverse-muted)">本年度已累计 54,600 / 76,000 成长值</div>
+</div>
+<div style="padding:20px 20px 0"><h2 style="margin:0 0 12px;font-family:var(--serif);font-size:18px;color:var(--ink)">白金专享权益</h2>
+  <div class="grid2">${[['plane','机场礼宾','全球 167 国'],['butler','专属管家','24 小时在线'],['bed','酒店升房','合作酒店'],['gift','生日礼遇','每年一次']].map(b=>`<div class="card">${ic(b[0],24)}<div style="font-size:14px;font-weight:600">${b[1]}</div><div class="muted" style="font-size:12px">${b[2]}</div></div>`).join('')}</div></div>
+<div class="rows" style="padding:10px 20px 24px">
+  <button data-go="points"><span style="color:var(--primary-hover);display:flex">${ic('coin',20)}</span><span class="grow">积分明细</span><span style="color:var(--ink-disabled);display:flex">${ic('right',18)}</span></button>
+  <button data-act="toast" data-msg="这一页在正式开发时补齐"><span style="color:var(--primary-hover);display:flex">${ic('doc',20)}</span><span class="grow">发票与账单</span><span style="color:var(--ink-disabled);display:flex">${ic('right',18)}</span></button>
+  <button data-act="toast" data-msg="这一页在正式开发时补齐"><span style="color:var(--primary-hover);display:flex">${ic('gear',20)}</span><span class="grow">账户与安全</span><span style="color:var(--ink-disabled);display:flex">${ic('right',18)}</span></button>
+</div>`;
+
+V.points=()=>`<div class="topbar">${back()}<h1>积分明细</h1></div>
+  <div style="padding:4px 16px 0"><div class="tiercard" style="padding:18px 20px">
+    <small>可用积分</small><div class="num" style="font-family:var(--display);font-size:30px;line-height:34px;font-weight:600;margin-top:2px">${fmt(S.points)}</div>
+    <small>1 积分 ≈ S$ 1，可用于全部臻选服务</small></div></div>
+  <div style="padding:8px 20px 24px">${S.ledger.map(l=>`<div style="display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--border)"><div style="flex:1;min-width:0"><div style="font-size:15px">${esc(l.t)}</div><div class="muted" style="font-size:12px;margin-top:2px">${l.d}</div></div><b class="num" style="font-weight:600;color:${l.v>0?'var(--success)':'var(--ink)'}">${l.v>0?'+':'−'} ${fmt(Math.abs(l.v))}</b></div>`).join('')}</div>`;
+
+/* ---------- shell ---------- */
+const TABS=[['home','home','首页'],['explore','grid','臻选'],['trips','cal','行程'],['concierge','chat','管家'],['me','user','我的']];
+const TABBED=['home','explore','trips','concierge','me'];
+const app=document.getElementById('app');let toastTimer;
+
+function render(keep){
+  const r=S.route,prev=app.querySelector('.screen'),top=keep&&prev?prev.scrollTop:0;
+  let foot='';
+  if(r==='detail')foot=detailBar();else if(r==='checkout')foot=checkoutBar();else if(r==='concierge')foot=composer();
+  if(TABBED.includes(r))foot+=`<nav class="tabbar" aria-label="底部导航">${TABS.map(t=>`<button data-go="${t[0]}" data-reset="1" aria-current="${r===t[0]}">${ic(t[1])}<span>${t[2]}</span>${t[0]==='concierge'&&S.unread&&r!=='concierge'?'<i class="dot"></i><span style="position:absolute;left:-9999px">有新消息</span>':''}</button>`).join('')}</nav>`;
+  let ov='';
+  if(S.overlay==='confirming')ov=`<div class="scrim"><div class="panel" role="status"><div class="spin"></div><h2>已提交给管家 Grace</h2><p class="muted" style="margin:0;font-size:14px">正在和酒店确认房态，确认后进入支付。积分尚未扣除。</p></div></div>`;
+  app.innerHTML=`<main class="screen">${V[r]()}</main>${foot}${ov}`;
+  const s=app.querySelector('.screen');s.scrollTop=r==='concierge'?s.scrollHeight:top;
+  syncJump();
+}
+function go(r,reset){if(reset)S.stack=[];else if(S.route!==r)S.stack.push(S.route);S.route=r;if(r==='concierge')S.unread=false;render();}
+function goBack(){S.route=S.stack.pop()||'home';render();}
+function toast(msg){app.querySelector('.toast')?.remove();const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=msg;app.appendChild(t);clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.remove(),2200);}
+
+function sendChat(text){
+  text=text.trim();if(!text)return;
+  S.chat.push({k:'me',text});S.typing=true;render();
+  setTimeout(()=>{S.typing=false;
+    let reply='收到，我马上安排，10 分钟内给您回复。';
+    if(/餐厅|晚餐/.test(text))reply='好的。8 日晚上我先帮您看两三家酒店附近的餐厅，把位置和人均发您挑。';
+    else if(/接机|接送|司机|劳斯莱斯/.test(text))reply='好的，请发我航班号和到达时间，我来安排司机和车辆。';
+    else if(/改|日期/.test(text))reply='可以改。告诉我新的日期，我先和酒店确认有没有房。';
+    else if(/发票|账单/.test(text))reply='发票会在退房后发到您的邮箱。抬头还用上次的公司信息吗？';
+    else if(/私人飞机|包机/.test(text))reply='收到。我按日期和人数整理几个机型方案，整理好发您比较。';
+    else if(/家办|家族办公室/.test(text))reply='好的，我来约家办顾问。您这周哪天下午方便？';
+    S.chat.push({k:'g',text:reply});if(S.route==='concierge')render();else{S.unread=true;render(true);}
+  },1100);
+}
+
+app.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b||b.disabled)return;const d=b.dataset;
+  if(d.go){go(d.go,!!d.reset);return;}
+  if(d.open){const it=byId(d.open);S.sel.id=it.id;if(it.book){S.sel.ci=it.id==='kyoto'?25:24;S.sel.co=S.sel.ci+2;S.sel.guests=2;if(it.full.some(f=>f>=S.sel.ci&&f<S.sel.co))S.sel.co=S.sel.ci+(it.full[0]-S.sel.ci);}go('detail');return;}
+  if(d.cat){S.cat=d.cat;go('explore',true);return;}
+  if(d.setcat){S.cat=d.setcat;render();return;}
+  if(d.tab){S.tripTab=d.tab;render();return;}
+  if(d.day){const day=+d.day,it=byId(S.sel.id);
+    if(!S.sel.co&&day>S.sel.ci&&!(it.full||[]).some(f=>f>=S.sel.ci&&f<day)){S.sel.co=day;}
+    else if(!(it.full||[]).includes(day)){S.sel.ci=day;S.sel.co=null;}
+    render(true);return;}
+  if(d.guests){S.sel.guests=Math.min(4,Math.max(1,S.sel.guests+(+d.guests)));render(true);return;}
+  if(d.quick){sendChat(d.quick);return;}
+  switch(d.act){
+    case 'back':goBack();break;
+    case 'toast':toast(d.msg);break;
+    case 'fav':{const id=S.sel.id;S.fav[id]=!S.fav[id];render(true);toast(S.fav[id]?'已收藏':'已取消收藏');break;}
+    case 'submit':S.overlay='confirming';render(true);setTimeout(()=>{S.overlay=null;go('checkout');},1800);break;
+    case 'pay':{const q=quote();S.paying=true;render(true);
+      setTimeout(()=>{
+        if(S.pay==='points'){S.points-=q.total;S.ledger.unshift({t:`${q.it.short} · ${q.n} 晚`,d:'10月24日',v:-q.total});}
+        S.trips.unshift({id:'n'+Date.now(),title:q.it.name,sub:`${dl(S.sel.ci)}–${dl(S.sel.co).replace(/^10月/,'')} · ${q.n} 晚 · ${S.sel.guests} 位`,img:q.it.img,status:['ok','已确认'],up:true});
+        S.paying=false;S.tripTab='up';S.stack=[];S.route='done';render();
+      },1400);break;}
+    case 'askConcierge':{const it=byId(S.sel.id);S.stack=[];S.route='concierge';S.unread=false;render();sendChat(`我想预约：${it.name}`);break;}
+    case 'askAbout':{const t=S.trips.find(x=>x.id===d.t);S.stack=[];S.route='concierge';S.unread=false;render();sendChat(`关于「${t.title}」，我想确认一下细节`);break;}
+  }
+});
+app.addEventListener('change',e=>{if(e.target.name==='pay'){S.pay=e.target.value;render(true);}});
+app.addEventListener('submit',e=>{e.preventDefault();const i=document.getElementById('cmsg'),v=i.value;i.value='';sendChat(v);setTimeout(()=>document.getElementById('cmsg')?.focus(),0);});
+
+/* review panel */
+const JUMP=[['效果图页面',null],['home','首页','效果图'],['detail','服务预约','效果图'],['checkout','确认支付','效果图'],['me','我的会籍','效果图'],['补充页面',null],['explore','臻选列表','补充'],['done','预订成功','补充'],['trips','我的行程','补充'],['concierge','管家对话','补充'],['points','积分明细','补充']];
+const jump=document.getElementById('jump');
+function syncJump(){jump.innerHTML=JUMP.map(([k,l,t])=>l==null?`<div class="grp">${k}</div>`:`<button data-j="${k}" aria-current="${S.route===k}"><span>${l}</span><span class="tagx">${t}</span></button>`).join('');}
+jump.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.j;
+  S.overlay=null;S.paying=false;
+  if(k==='detail'||k==='checkout'||k==='done'){S.sel={id:'kyoto',ci:25,co:27,guests:2};}
+  if(k==='done'&&!S.trips[0].id.startsWith('n'))S.trips.unshift({id:'n0',title:'四季酒店 · 池泉庭园套房',sub:'10月25日–27日 · 2 晚 · 2 位',img:'kyoto',status:['ok','已确认'],up:true});
+  S.stack=TABBED.includes(k)?[]:(k==='checkout'?['home','detail']:k==='points'?['me']:['home']);
+  S.route=k;if(k==='concierge')S.unread=false;render();});
+const themes=document.querySelector('.themes');
+function syncTheme(){const cur=document.documentElement.getAttribute('data-theme')||'';themes.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.th===cur)));}
+themes.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.th)document.documentElement.setAttribute('data-theme',b.dataset.th);else document.documentElement.removeAttribute('data-theme');syncTheme();});
+syncTheme();
+const start=(location.hash||'').slice(1);
+if(V[start]&&start!=='done'){S.route=start;if(!TABBED.includes(start))S.stack=['home'];}
+render();
+})();
+</script>
+
+</body>
+</html>
